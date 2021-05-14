@@ -5,7 +5,7 @@ import { Modal } from "../Modal/Modal";
 import { useAllTeam } from "../../hooks/teamHooks";
 
 export function Header() {
-  const { leaderBoard, setLeaderBoard } = useAllTeam();
+  const { teams, setTeams } = useAllTeam();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [teamName, setTeamName] = useState("");
 
@@ -34,7 +34,7 @@ export function Header() {
   );
 
   function onCompleteClick() {
-    setLeaderBoard([...leaderBoard, { name: teamName, score: 0 }]);
+    setTeams([...teams, { name: teamName, score: 0 }]);
     setIsModalOpen(false);
   }
 }

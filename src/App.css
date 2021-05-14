@@ -2,8 +2,3 @@
   text-align: center;
   font-family: Arial, Courier, Helvetica, serif;
 }
-
-.app-content{
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-}

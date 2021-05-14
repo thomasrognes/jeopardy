@@ -2,23 +2,16 @@ import React, { createContext, useState } from "react";
 
 export const TeamContext = createContext();
 
-export function LeaderBoardContextProvider(props) {
+export function TeamsContextProvider(props) {
   const { children } = props;
-  const [leaderBoard, setLeaderBoard] = useState([
-    {
-      name: "ThomasForTheWin",
-      score: 100,
-    },
-  ]);
+  const [teams, setTeams] = useState([]);
 
   const context = {
-    leaderBoard,
-    setLeaderBoard,
+    teams,
+    setTeams,
   };
 
   return (
-    <TeamContext.Provider value={context}>
-      {children}
-    </TeamContext.Provider>
+    <TeamContext.Provider value={context}>{children}</TeamContext.Provider>
   );
 }

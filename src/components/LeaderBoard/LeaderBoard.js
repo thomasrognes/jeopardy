@@ -1,11 +1,19 @@
 import React from "react";
+import { useAllTeam } from "../../hooks/teamHooks";
+
+import "./LeaderBoard.css";
 
 export function LeaderBoard() {
+  const { teams } = useAllTeam();
+
   return (
     <div className="leader-board">
       <h1>Tabell</h1>
-        <div>1. VikTheQueen 4 200</div>
-        <div>2. ThomasTheTrain 2 300</div>
+      {teams.map((team) => (
+        <div>
+          {team.name} {team.score}
+        </div>
+      ))}
     </div>
   );
 }

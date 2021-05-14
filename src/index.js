@@ -3,13 +3,13 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { LeaderBoardContextProvider } from "./context/TeamContext";
+import { TeamsContextProvider } from "./context/TeamContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <LeaderBoardContextProvider>
+    <TeamsContextProvider>
       <App />
-    </LeaderBoardContextProvider>
+    </TeamsContextProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
