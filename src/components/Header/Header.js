@@ -2,17 +2,18 @@ import React, { useState } from "react";
 
 import "./Header.css";
 import { Modal } from "../Modal/Modal";
+import { useAllTeam } from "../../hooks/teamHooks";
+
 export function Header() {
+  const { leaderBoard, setLeaderBoard } = useAllTeam();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [teamName, setTeamName] = useState("");
-  function addTeam() {
-    setIsModalOpen(true);
-  }
+
   return (
     <header className="header">
-      <div>Tabell</div>
+      <div />
       <h1>Jeopardy</h1>
-      <button onClick={addTeam}>Legg til lag</button>
+      <button onClick={() => setIsModalOpen(true)}>Legg til lag</button>
       {isModalOpen && (
         <Modal
           title={"Legg til lagnavn"}
@@ -33,6 +34,7 @@ export function Header() {
   );
 
   function onCompleteClick() {
-    console.log(teamName);
+    setLeaderBoard([...leaderBoard, { name: teamName, score: 0 }]);
+    setIsModalOpen(false);
   }
 }
