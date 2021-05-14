@@ -21,3 +21,18 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Jetbrains (Intellij)
+.idea
+.project
+.iml
+
+# random
+.classpath
+.settings
+/.idea/.gitignore
+/.idea/jeopardy.iml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/vcs.xml
