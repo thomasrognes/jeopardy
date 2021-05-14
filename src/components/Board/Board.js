@@ -1,14 +1,14 @@
 import React from "react";
-import { ScoreButton } from "../Scorebutton/ScoreButton";
+import {Category} from "../Category/Category";
+import './Board.css';
 
 export function Board() {
   return (
     <div className="board">
-      <ScoreButton score={"100"} />
-      <ScoreButton score={"200"} />
-      <ScoreButton score={"300"} />
-      <ScoreButton score={"400"} />
-      <ScoreButton score={"500"} />
+      <Category name={"Sted"} />
+      <Category name={"Kroppsdel"} />
+      <Category name={"Tid"} />
+      <Category name={"Mat"} />
     </div>
   );
 }

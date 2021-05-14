@@ -1,0 +1,24 @@
+.score-button {
+  margin-top: 1rem;
+  font-size: 16pt;
+  padding: 0.5rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.score-button-not-disabled {
+  cursor: pointer;
+  border: 2px solid black;
+  background: none;
+}
+
+.score-button-not-disabled:hover {
+  background-color: navy;
+  color: red;
+}
+
+.score-button-disabled {
+  border: 2px solid red;
+  color: white;
+  background-image: url("./norway.png");
+}
