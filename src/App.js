@@ -1,12 +1,16 @@
 import "./App.css";
 import { Board } from "./components/Board/Board";
+import { Header } from "./components/Header/Header";
+import { LeaderBoard } from "./components/LeaderBoard/LeaderBoard";
 
 function App() {
-  var classNames = require("classnames");
   return (
     <div className="App">
-      <h1>Jeopardy</h1>
-      <Board />
+      <Header />
+      <div className="app-content">
+        <LeaderBoard />
+        <Board />
+      </div>
     </div>
   );
 }
