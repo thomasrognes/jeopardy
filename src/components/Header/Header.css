@@ -3,16 +3,21 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
-.header-button-content{
+.header-button-content {
   margin-top: 2rem;
 }
 
-.header-button{
-  background-color: red;
-  padding: 1rem;
-}
-
-.complete-button{
+.complete-button {
   display: block;
   margin: 1rem auto 0 auto;
+}
+
+.add-team-form {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+}
+
+.error {
+  color: red;
 }

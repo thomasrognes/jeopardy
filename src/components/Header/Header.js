@@ -8,7 +8,7 @@ export function Header() {
   const { teams, setTeams } = useAllTeam();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [teamName, setTeamName] = useState("");
-
+  const [errorMessage, setErrorMessage] = useState("");
   return (
     <header className="header">
       <div />
@@ -27,20 +27,33 @@ export function Header() {
           hidden={false}
           onDialogToggle={() => setIsModalOpen(!isModalOpen)}
         >
-          <input
-            type="text"
-            id="name"
-            name="Lagnavn"
-            required
-            onChange={(e) => setTeamName(e.target.value)}
-          />
-          <button className='complete-button' onClick={onCompleteClick}>Fullfør</button>
+          <form className="add-team-form">
+            <label htmlFor="name">Lagnavn</label>
+            <input
+              type="text"
+              id="name"
+              name="Lagnavn"
+              required
+              onChange={(e) => {
+                setTeamName(e.target.value);
+                setErrorMessage("");
+              }}
+            />
+            <span className="error">{errorMessage}</span>
+          </form>
+          <button className="complete-button" onClick={onCompleteClick}>
+            Fullfør
+          </button>
         </Modal>
       )}
     </header>
   );
 
   function onCompleteClick() {
+    if (teamName === "") {
+      setErrorMessage("Lagnavn kan ikke være tomt.");
+      return;
+    }
     setTeams([...teams, { name: teamName, score: 0 }]);
     setIsModalOpen(false);
   }

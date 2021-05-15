@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import CoreDialog from "@nrk/core-dialog/jsx";
 
 import "./Modal.css";
+import { CrossIcon } from "../crossIcon/CrossIcon";
 
 export function Modal(props) {
   const {
@@ -30,13 +31,13 @@ export function Modal(props) {
         backdrop={true}
         onDialogToggle={onDialogToggle}
       >
-        <h3 className="modal__heading jkl-spacing--bottom-2">{title}</h3>
+        <h3 className="modal-title">{title}</h3>
         {children}
         <button
           onClick={onDialogToggle}
           className="modal-close-button remove-button-style"
         >
-          Close
+          <CrossIcon />
         </button>
       </CoreDialog>
     </div>,
