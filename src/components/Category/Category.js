@@ -10,12 +10,12 @@ export function Category(props) {
 
   return (
     <div className="category">
-      <h1>{categoryName}</h1>
-      <ScoreButton score={"100"} />
-      <ScoreButton score={"200"} />
-      <ScoreButton score={"300"} />
-      <ScoreButton score={"400"} />
-      <ScoreButton score={"500"} />
+      <h2>{categoryName}</h2>
+      <ScoreButton score={100} categoryName={categoryName} />
+      <ScoreButton score={200} categoryName={categoryName} />
+      <ScoreButton score={300} categoryName={categoryName} />
+      <ScoreButton score={400} categoryName={categoryName} />
+      <ScoreButton score={500} categoryName={categoryName} />
     </div>
   );
 }

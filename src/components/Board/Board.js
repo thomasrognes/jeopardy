@@ -6,9 +6,9 @@ export function Board() {
   return (
     <div className="board">
       <Category name={"Sted"} />
-      <Category name={"Kroppsdel"} />
+      <Category name={"Tall"} />
+      <Category name={"Mat og drikke"} />
       <Category name={"Tid"} />
-      <Category name={"Mat"} />
     </div>
   );
 }
