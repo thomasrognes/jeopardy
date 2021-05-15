@@ -24,9 +24,8 @@ export function Header() {
       {isModalOpen && (
         <Modal
           title={"Legg til lagnavn"}
-          isOpen={isModalOpen}
-          setIsOpen={() => setIsModalOpen(!isModalOpen)}
-          onCompleteClick={onCompleteClick}
+          hidden={false}
+          onDialogToggle={() => setIsModalOpen(!isModalOpen)}
         >
           <input
             type="text"
@@ -35,6 +34,7 @@ export function Header() {
             required
             onChange={(e) => setTeamName(e.target.value)}
           />
+          <button className='complete-button' onClick={onCompleteClick}>Fullfør</button>
         </Modal>
       )}
     </header>

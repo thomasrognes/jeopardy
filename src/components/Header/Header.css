@@ -11,3 +11,8 @@
   background-color: red;
   padding: 1rem;
 }
+
+.complete-button{
+  display: block;
+  margin: 1rem auto 0 auto;
+}

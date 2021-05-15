@@ -1,31 +1,45 @@
 import React from "react";
+import ReactDOM from "react-dom";
+import CoreDialog from "@nrk/core-dialog/jsx";
 
 import "./Modal.css";
 
 export function Modal(props) {
-  const { title, children, isOpen, setIsOpen, onCompleteClick } = props;
+  const {
+    title,
+    hidden,
+    onDialogToggle,
+    children,
+    strict = false,
+    classNameForModal,
+  } = props;
 
-  const className = require("classnames");
-  const classNamesForModal = className({
-    modal: true,
-    "modal-is-open": isOpen,
-    "modal-is-closed": !isOpen,
-  });
+  const classNames = require("classnames");
+  const modalRoot = document.getElementById("modal-root");
 
-  return (
-    <div className={classNamesForModal}>
-      <div className="modal-content">
-        <div className="modal-header">
-          <h1>{title}</h1>
-          <button onClick={() => setIsOpen(false)} className={"close"}>
-            &times;
-          </button>
-        </div>
-        <div>{children}</div>
-        <button className="modal-complete-button" onClick={onCompleteClick}>
-          Fullfør
+  if (!modalRoot) {
+    throw Error("Could not find he DOM element to render modal in.");
+  }
+
+  return ReactDOM.createPortal(
+    <div className={classNames("modal", classNameForModal)}>
+      <CoreDialog
+        className="modal-content"
+        hidden={hidden}
+        strict={strict}
+        backdrop={true}
+        onDialogToggle={onDialogToggle}
+      >
+        <h3 className="modal__heading jkl-spacing--bottom-2">{title}</h3>
+        {children}
+        <button
+          onClick={onDialogToggle}
+          className="modal-close-button remove-button-style"
+        >
+          Close
         </button>
-      </div>
-    </div>
+      </CoreDialog>
+    </div>,
+    modalRoot
   );
 }
