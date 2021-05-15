@@ -21,3 +21,8 @@
 .error {
   color: red;
 }
+
+.registered-teams {
+  display: flex;
+  flex-direction: column;
+}

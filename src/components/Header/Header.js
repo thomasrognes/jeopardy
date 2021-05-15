@@ -11,7 +11,14 @@ export function Header() {
   const [errorMessage, setErrorMessage] = useState("");
   return (
     <header className="header">
-      <div />
+      <div className="registered-teams">
+        <span>Registrerte lag: </span>
+        <ul>
+          {teams.map((team, index) => (
+            <li key={index}>{team.name}</li>
+          ))}
+        </ul>
+      </div>
       <h1>Jeopardy</h1>
       <div className="header-button-content">
         <button
@@ -27,7 +34,7 @@ export function Header() {
           hidden={false}
           onDialogToggle={() => setIsModalOpen(!isModalOpen)}
         >
-          <form className="add-team-form">
+          <form className="add-team-form" onSubmit={(e) => e.preventDefault()}>
             <label htmlFor="name">Lagnavn</label>
             <input
               type="text"
