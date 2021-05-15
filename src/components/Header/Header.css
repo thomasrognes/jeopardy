@@ -2,3 +2,12 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
+
+.header-button-content{
+  margin-top: 2rem;
+}
+
+.header-button{
+  background-color: red;
+  padding: 1rem;
+}

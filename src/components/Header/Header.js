@@ -13,7 +13,14 @@ export function Header() {
     <header className="header">
       <div />
       <h1>Jeopardy</h1>
-      <button onClick={() => setIsModalOpen(true)}>Legg til lag</button>
+      <div className="header-button-content">
+        <button
+          className="btn-primary btn-lg"
+          onClick={() => setIsModalOpen(true)}
+        >
+          Legg til nytt lag
+        </button>
+      </div>
       {isModalOpen && (
         <Modal
           title={"Legg til lagnavn"}

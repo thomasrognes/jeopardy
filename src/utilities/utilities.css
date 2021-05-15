@@ -1,0 +1,8 @@
+/* Denne klassen fjerne default <button> style som kommer som default i browsere */
+.remove-button-style {
+    padding: 0;
+    border: none;
+    background-color: inherit;
+    cursor: pointer;
+    color: inherit;
+}
