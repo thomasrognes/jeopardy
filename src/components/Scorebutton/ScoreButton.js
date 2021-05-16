@@ -45,19 +45,23 @@ export function ScoreButton(props) {
           <div className="select-component">
             <label htmlFor="teams">Velg laget som gjettet korrekt:</label>
             <select
+              className="select-component-input"
               name="teams"
               id="teams"
-              onChange={(e) => setWinnerTeam(e.target.value)}
+              onChange={(e) => {
+                setErrorMessage("");
+                setWinnerTeam(e.target.value);
+              }}
             >
-              <option value="" />
+              <option value={undefined} />
               {teams.map((team, index) => (
                 <option value={team.name} key={index}>
                   {team.name}
                 </option>
               ))}
             </select>
+            {errorMessage && <span className="error">{errorMessage}</span>}
           </div>
-          {errorMessage && <span className="error">{errorMessage}</span>}
           <button
             type="button"
             className="add-points-button"
@@ -76,13 +80,13 @@ export function ScoreButton(props) {
       return;
     }
 
+    console.log(winnerTeam);
+
     const teamToGetPoints = teams.find((team) => team.name === winnerTeam);
     const index = teams.indexOf(teamToGetPoints);
 
     if (teamToGetPoints === undefined || index === -1) {
-      setErrorMessage(
-        "Laget finnes ikke.. Be Thomas skjerpe seg og skrive bedre kode for dette skal ikke skje."
-      );
+      setErrorMessage("Laget finnes ikke..");
       return;
     }
 

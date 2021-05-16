@@ -24,9 +24,16 @@
 }
 
 .select-component {
-  padding-top: 2rem;
   display: flex;
   flex-direction: column;
+  padding: 2rem 0;
+}
+
+.select-component-input{
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid black;
+  border-radius: 4px;
 }
 
 .add-points-button {
