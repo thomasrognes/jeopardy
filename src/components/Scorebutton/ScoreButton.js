@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import "./ScoreButton.css";
 import { useAllTeam } from "../../hooks/teamHooks";
 import { Modal } from "../Modal/Modal";
+import { LeaderBoard } from "../LeaderBoard/LeaderBoard";
 
 export function ScoreButton(props) {
   const [winnerTeam, setWinnerTeam] = useState();
   const [isDisabled, setIsDisabled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [showLeaderBoard, setShowLeaderBoard] = useState(false);
 
   const { teams, setTeams } = useAllTeam();
 
@@ -35,33 +37,39 @@ export function ScoreButton(props) {
       </button>
       {isModalOpen && (
         <Modal
-          title={`${categoryName} ${score} poeng`}
+          title={showLeaderBoard ? "" : `${categoryName} ${score} poeng`}
           hidden={false}
           onDialogToggle={() => setIsModalOpen(!isModalOpen)}
         >
-          <div className="select-component">
-            <label htmlFor="teams">Velg laget som gjettet korrekt:</label>
-            <select
-              name="teams"
-              id="teams"
-              onChange={(e) => setWinnerTeam(e.target.value)}
-            >
-              <option value="" />
-              {teams.map((team, index) => (
-                <option value={team.name} key={index}>
-                  {team.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          {errorMessage && <span>{errorMessage}</span>}
-          <button
-            type="button"
-            className="add-points-button"
-            onClick={addScore}
-          >
-            Legg til poeng
-          </button>
+          {showLeaderBoard ? (
+            <LeaderBoard onCloseClick={() => setIsModalOpen(!isModalOpen)} />
+          ) : (
+            <>
+              <div className="select-component">
+                <label htmlFor="teams">Velg laget som gjettet korrekt:</label>
+                <select
+                  name="teams"
+                  id="teams"
+                  onChange={(e) => setWinnerTeam(e.target.value)}
+                >
+                  <option value="" />
+                  {teams.map((team, index) => (
+                    <option value={team.name} key={index}>
+                      {team.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {errorMessage && <span>{errorMessage}</span>}
+              <button
+                type="button"
+                className="add-points-button"
+                onClick={addScore}
+              >
+                Legg til poeng
+              </button>
+            </>
+          )}
         </Modal>
       )}
     </>
@@ -91,6 +99,6 @@ export function ScoreButton(props) {
     };
     setTeams(teamsArray);
 
-    setIsModalOpen(false);
+    setShowLeaderBoard(true);
   }
 }

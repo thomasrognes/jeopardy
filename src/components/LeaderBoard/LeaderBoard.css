@@ -1,4 +1,14 @@
-.leader-board{
-    padding-top: 5rem;
-    padding-left: 2rem;
+.leader-board {
+  width: 100%;
+  margin-top: 6rem;
+}
+
+.leader-board-headings {
+  font-size: 20pt;
+  text-align: left;
+}
+
+.leader-board-close-button {
+  display: block;
+  margin: 2rem auto;
 }

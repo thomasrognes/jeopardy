@@ -11,15 +11,8 @@ export function Header() {
   const [errorMessage, setErrorMessage] = useState("");
   return (
     <header className="header">
-      <div className="registered-teams">
-        <span>Registrerte lag: </span>
-        <ul>
-          {teams.map((team, index) => (
-            <li key={index}>{team.name}</li>
-          ))}
-        </ul>
-      </div>
-      <h1>Jeopardy</h1>
+      <div />
+      <h1>Musikk Jeopardy</h1>
       <div className="header-button-content">
         <button
           className="btn-primary btn-lg"
