@@ -24,7 +24,7 @@
 }
 
 .select-component {
-  padding: 2rem 0;
+  padding-top: 2rem;
   display: flex;
   flex-direction: column;
 }

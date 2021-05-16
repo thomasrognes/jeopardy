@@ -57,7 +57,7 @@ export function ScoreButton(props) {
               ))}
             </select>
           </div>
-          {errorMessage && <span>{errorMessage}</span>}
+          {errorMessage && <span className="error">{errorMessage}</span>}
           <button
             type="button"
             className="add-points-button"
