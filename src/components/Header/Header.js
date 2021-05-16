@@ -23,13 +23,14 @@ export function Header() {
       </div>
       {isModalOpen && (
         <Modal
-          title={"Legg til lagnavn"}
+          title={"Legg til nytt lag"}
           hidden={false}
           onDialogToggle={() => setIsModalOpen(!isModalOpen)}
         >
           <form className="add-team-form" onSubmit={(e) => e.preventDefault()}>
             <label htmlFor="name">Lagnavn</label>
             <input
+              className="add-team-form-name"
               type="text"
               id="name"
               name="Lagnavn"
