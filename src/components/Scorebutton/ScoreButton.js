@@ -39,7 +39,10 @@ export function ScoreButton(props) {
         <Modal
           title={showLeaderBoard ? "" : `${categoryName} ${score} poeng`}
           hidden={false}
-          onDialogToggle={() => setIsModalOpen(!isModalOpen)}
+          onDialogToggle={() => {
+            setIsModalOpen(!isModalOpen);
+            setIsDisabled(false); // Players can make a mistake and pick wrong category or score amount.
+          }}
         >
           {showLeaderBoard ? (
             <LeaderBoard onCloseClick={() => setIsModalOpen(!isModalOpen)} />
