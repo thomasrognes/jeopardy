@@ -2,6 +2,7 @@ import React from "react";
 import { Category } from "../Category/Category";
 import "./Board.css";
 import { LeaderBoard } from "../LeaderBoard/LeaderBoard";
+import { GameInfo } from "../GameInfo/GameInfo";
 
 export function Board() {
   return (
@@ -15,6 +16,7 @@ export function Board() {
       <div className="board-leaderboard">
         <LeaderBoard />
       </div>
+      <GameInfo />
     </div>
   );
 }

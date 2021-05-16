@@ -4,8 +4,7 @@ import { useAllTeam } from "../../hooks/teamHooks";
 import "./LeaderBoard.css";
 import { LeaderBoardRow } from "./LeaderBoardRow";
 
-export function LeaderBoard(props) {
-  const { onCloseClick } = props;
+export function LeaderBoard() {
   const { teams } = useAllTeam();
 
   if (teams.length === 0) {
@@ -15,26 +14,26 @@ export function LeaderBoard(props) {
   return (
     <>
       <table className="leader-board">
-        <tr className="leader-board-headings">
-          <th>Plassering</th>
-          <th>Lagnavn</th>
-          <th>Poeng</th>
-        </tr>
-        {teams
-          .sort((a, b) => b.score - a.score)
-          .map((team, index) => (
-            <LeaderBoardRow
-              placement={index + 1}
-              teamName={team.name}
-              score={team.score}
-            />
-          ))}
+        <thead>
+          <tr className="leader-board-headings">
+            <th>Plassering</th>
+            <th>Lagnavn</th>
+            <th>Poeng</th>
+          </tr>
+        </thead>
+        <tbody>
+          {teams
+            .sort((a, b) => b.score - a.score)
+            .map((team, index) => (
+              <LeaderBoardRow
+                placement={index + 1}
+                teamName={team.name}
+                score={team.score}
+                key={index}
+              />
+            ))}
+        </tbody>
       </table>
-      {onCloseClick && (
-        <button className="leader-board-close-button" onClick={onCloseClick}>
-          Lukk
-        </button>
-      )}
     </>
   );
 }
