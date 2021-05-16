@@ -9,6 +9,7 @@ export function ScoreButton(props) {
   const [isDisabled, setIsDisabled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isOnlyWrongAnswers, setIsOnlyWrongAnswers] = useState(false);
 
   const { teams, setTeams } = useAllTeam();
 
@@ -61,6 +62,19 @@ export function ScoreButton(props) {
               ))}
             </select>
             {errorMessage && <span className="error">{errorMessage}</span>}
+
+            <div className="checkbox-component">
+              <input
+                type="checkbox"
+                id="noAnswers"
+                name="noAnswers"
+                value={isOnlyWrongAnswers}
+                onChange={() => setIsOnlyWrongAnswers(!isOnlyWrongAnswers)}
+              />
+              <label className={"checkbox-component-label"} htmlFor="noAnswers">
+                Ingen gjettet riktig.
+              </label>
+            </div>
           </div>
           <button
             type="button"
@@ -75,12 +89,15 @@ export function ScoreButton(props) {
   );
 
   function addScore() {
+    if (isOnlyWrongAnswers) {
+      setIsModalOpen(false);
+      return;
+    }
+
     if (winnerTeam === undefined) {
       setErrorMessage("Påkrevd felt.");
       return;
     }
-
-    console.log(winnerTeam);
 
     const teamToGetPoints = teams.find((team) => team.name === winnerTeam);
     const index = teams.indexOf(teamToGetPoints);
