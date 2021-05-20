@@ -1,12 +1,13 @@
 .header {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+
+  &__button {
+    margin-top: 2rem;
+  }
 }
 
-.header-button-content {
-  margin-top: 2rem;
-}
-
+//TODO Få dette ut i en egen komponent
 .complete-button {
   display: block;
   margin: 1rem auto 0 auto;

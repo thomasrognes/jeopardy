@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./LeaderBoardRow.css";
+import "./LeaderBoardRow.scss";
 
 interface Props {
   placement: number;

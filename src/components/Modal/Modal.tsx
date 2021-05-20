@@ -3,8 +3,9 @@ import ReactDOM from "react-dom";
 // @ts-ignore
 import CoreDialog from "@nrk/core-dialog/jsx";
 
-import "./Modal.css";
+import "./Modal.scss";
 import { CrossIcon } from "../crossIcon/CrossIcon";
+import classNames from "classnames";
 
 interface Props {
   title: string;
@@ -25,7 +26,6 @@ export function Modal(props: Props) {
     classNameForModal,
   } = props;
 
-  const classNames = require("classnames");
   const modalRoot = document.getElementById("modal-root");
 
   if (!modalRoot) {
@@ -35,17 +35,17 @@ export function Modal(props: Props) {
   return ReactDOM.createPortal(
     <div className={classNames("modal", classNameForModal)}>
       <CoreDialog
-        className="modal-content"
+        className="modal__content"
         hidden={hidden}
         strict={strict}
         backdrop={true}
         onDialogToggle={onDialogToggle}
       >
-        <h3 className="modal-title">{title}</h3>
+        <h3 className="modal__title">{title}</h3>
         {children}
         <button
           onClick={onDialogToggle}
-          className="modal-close-button remove-button-style"
+          className="modal__close-button remove-button-style"
         >
           <CrossIcon />
         </button>

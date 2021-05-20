@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ScoreButton } from "../Scorebutton/ScoreButton";
 
-import "./Category.css";
+import "./Category.scss";
 import { EditPen } from "../EditPen/EditPen";
 
 interface Props {
@@ -16,12 +16,12 @@ export function Category(props: Props) {
 
   return (
     <div className="category">
-      <div className="category-name">
+      <div className="category__name">
         {editing ? (
           <input
             value={categoryName}
             onChange={(e) => setCategoryName(e.target.value)}
-            className="category-name-input"
+            className="category__name-input"
           />
         ) : (
           <h2>{categoryName}</h2>
