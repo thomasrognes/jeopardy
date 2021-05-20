@@ -9,6 +9,7 @@ export function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [teamName, setTeamName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
   return (
     <header className="header">
       <div />
