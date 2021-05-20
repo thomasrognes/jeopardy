@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./EditPen.css";
+import "./EditPen.scss";
 
 export function EditPen() {
   return (

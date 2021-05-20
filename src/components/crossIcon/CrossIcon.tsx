@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./CrossIcon.css";
+import "./CrossIcon.scss";
 
 export function CrossIcon() {
   return (

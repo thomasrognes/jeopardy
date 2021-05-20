@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import gameInfo from "../../json/gameInfo.json";
 
-import "./GameInfo.css";
+import "./GameInfo.scss";
 
 interface GameInfoType {
   id: number;
@@ -36,7 +36,7 @@ export function GameInfo() {
       </select>
 
       {gameInfoToShow && (
-        <div className="game-info-links">
+        <div className="game-info__links">
           <span className="error">
             Ikke vis info som ligger på linkene til deltakere
           </span>

@@ -11,18 +11,18 @@
   width: 100%;
   z-index: 1;
   background-color: rgba(0, 0, 0, 0.4);
-}
 
-.modal-content {
-  position: relative;
-  background-color: white;
-  box-shadow: 0 8px 10px 0 rgba(0, 0, 0, 0.3);
-  padding: 1rem;
-}
+  &__content {
+    position: relative;
+    background-color: white;
+    box-shadow: 0 8px 10px 0 rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+  }
 
-.modal-close-button {
-  position: absolute;
-  height: 2rem;
-  top: 1rem;
-  right: 1rem;
+  &__close-button {
+    position: absolute;
+    height: 2rem;
+    top: 1rem;
+    right: 1rem;
+  }
 }

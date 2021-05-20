@@ -1,7 +1,7 @@
 import React from "react";
 import { useAllTeam } from "../../hooks/teamHooks";
 
-import "./LeaderBoard.css";
+import "./LeaderBoard.scss";
 import { LeaderBoardRow } from "./LeaderBoardRow";
 
 export function LeaderBoard() {
@@ -15,7 +15,7 @@ export function LeaderBoard() {
     <>
       <table className="leader-board">
         <thead>
-          <tr className="leader-board-headings">
+          <tr className="leader-board__headings">
             <th>Plassering</th>
             <th>Lagnavn</th>
             <th>Poeng</th>

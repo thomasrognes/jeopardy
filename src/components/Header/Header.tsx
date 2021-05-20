@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import "./Header.css";
+import "./Header.scss";
 import { Modal } from "../Modal/Modal";
 import { useAllTeam } from "../../hooks/teamHooks";
 
@@ -14,7 +14,7 @@ export function Header() {
     <header className="header">
       <div />
       <h1>Musikk Jeopardy</h1>
-      <div className="header-button-content">
+      <div className="header__button">
         <button
           className="btn-primary btn-lg"
           onClick={() => setIsModalOpen(true)}

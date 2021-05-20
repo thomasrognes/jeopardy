@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 
-import "./ScoreButton.css";
+import "./ScoreButton.scss";
 import { useAllTeam } from "../../hooks/teamHooks";
 import { Modal } from "../Modal/Modal";
+import classNames from "classnames";
 
 interface Props {
   score: number;
@@ -19,11 +20,10 @@ export function ScoreButton(props: Props) {
 
   const { teams, setTeams } = useAllTeam();
 
-  const classNames = require("classnames");
   const classNamesForScoreButton = classNames({
     "score-button": true,
-    "score-button-disabled": isDisabled,
-    "score-button-not-disabled": !isDisabled,
+    "score-button__disabled": isDisabled,
+    "score-button__not-disabled": !isDisabled,
   });
 
   return (

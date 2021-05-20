@@ -1,0 +1,17 @@
+.category {
+  display: flex;
+  flex-direction: column;
+
+  &__name {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+
+  &__name-input {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 19px;
+  }
+}
