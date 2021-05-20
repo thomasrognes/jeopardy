@@ -4,12 +4,18 @@ import "./ScoreButton.css";
 import { useAllTeam } from "../../hooks/teamHooks";
 import { Modal } from "../Modal/Modal";
 
-export function ScoreButton(props) {
-  const [winnerTeam, setWinnerTeam] = useState();
+interface Props {
+  score: number;
+  categoryName: string;
+}
+
+export function ScoreButton(props: Props) {
+  const [winnerTeam, setWinnerTeam] = useState<string>();
   const [isDisabled, setIsDisabled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isOnlyWrongAnswers, setIsOnlyWrongAnswers] = useState(false);
+  const { score, categoryName } = props;
 
   const { teams, setTeams } = useAllTeam();
 
@@ -19,8 +25,6 @@ export function ScoreButton(props) {
     "score-button-disabled": isDisabled,
     "score-button-not-disabled": !isDisabled,
   });
-
-  const { score, categoryName } = props;
 
   return (
     <>
@@ -65,10 +69,10 @@ export function ScoreButton(props) {
 
             <div className="checkbox-component">
               <input
-                type="checkbox"
+                type={"checkbox"}
                 id="noAnswers"
                 name="noAnswers"
-                value={isOnlyWrongAnswers}
+                // value={isOnlyWrongAnswers}
                 onChange={() => setIsOnlyWrongAnswers(!isOnlyWrongAnswers)}
               />
               <label className={"checkbox-component-label"} htmlFor="noAnswers">
@@ -100,12 +104,13 @@ export function ScoreButton(props) {
     }
 
     const teamToGetPoints = teams.find((team) => team.name === winnerTeam);
-    const index = teams.indexOf(teamToGetPoints);
 
-    if (teamToGetPoints === undefined || index === -1) {
+    if (!teamToGetPoints) {
       setErrorMessage("Laget finnes ikke..");
       return;
     }
+
+    const index = teams.indexOf(teamToGetPoints);
 
     // Changing the object of the team to update score before adding the new object to teams array
     const teamsArray = [...teams];

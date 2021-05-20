@@ -1,11 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
+// @ts-ignore
 import CoreDialog from "@nrk/core-dialog/jsx";
 
 import "./Modal.css";
 import { CrossIcon } from "../crossIcon/CrossIcon";
 
-export function Modal(props) {
+interface Props {
+  title: string;
+  hidden: boolean;
+  onDialogToggle: () => void;
+  children: React.ReactNode;
+  strict?: boolean;
+  classNameForModal?: string;
+}
+
+export function Modal(props: Props) {
   const {
     title,
     hidden,

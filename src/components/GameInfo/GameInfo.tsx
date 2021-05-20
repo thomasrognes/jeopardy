@@ -3,10 +3,20 @@ import gameInfo from "../../json/gameInfo.json";
 
 import "./GameInfo.css";
 
-export function GameInfo() {
-  const [currentGameInfo, setCurrentGameInfo] = useState();
+interface GameInfoType {
+  id: number;
+  name: string;
+  googleDocLink: string;
+  spotifyLink: string;
+  author: string;
+}
 
-  const gameInfoToShow = gameInfo.find((game) => game.id === currentGameInfo);
+export function GameInfo() {
+  const [currentGameInfo, setCurrentGameInfo] = useState<number>();
+
+  const gameInfoToShow: GameInfoType | undefined = gameInfo.find(
+    (game) => game.id === currentGameInfo
+  );
 
   return (
     <div className="game-info">
@@ -27,7 +37,9 @@ export function GameInfo() {
 
       {gameInfoToShow && (
         <div className="game-info-links">
-          <span className="error">Ikke vis info som ligger på linkene til deltakere</span>
+          <span className="error">
+            Ikke vis info som ligger på linkene til deltakere
+          </span>
           <span>Navn: {gameInfoToShow.name}</span>
           <span>
             Google doc link:{" "}

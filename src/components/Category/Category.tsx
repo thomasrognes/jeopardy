@@ -4,7 +4,11 @@ import { ScoreButton } from "../Scorebutton/ScoreButton";
 import "./Category.css";
 import { EditPen } from "../EditPen/EditPen";
 
-export function Category(props) {
+interface Props {
+  name: string;
+}
+
+export function Category(props: Props) {
   const { name } = props;
 
   const [categoryName, setCategoryName] = useState(name);
@@ -17,7 +21,6 @@ export function Category(props) {
           <input
             value={categoryName}
             onChange={(e) => setCategoryName(e.target.value)}
-            onfocusout={() => setEditing(false)}
             className="category-name-input"
           />
         ) : (
