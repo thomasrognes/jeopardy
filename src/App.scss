@@ -1,5 +1,13 @@
+@import "utilities/colors.scss";
+
 .App {
   text-align: center;
   font-family: Arial, Courier, Helvetica, serif;
-  height: 100vh;
+  min-height: 100%;
+  background-color: $blue;
+  color: $yellow;
+}
+
+#root{
+  height: 100%;
 }

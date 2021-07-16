@@ -1,24 +1,25 @@
+@import "src/utilities/colors.scss";
+
 .score-button {
   margin-top: 1rem;
   font-size: 16pt;
   padding: 0.5rem;
   text-align: center;
   font-weight: bold;
+  border-radius: 2rem;
 
   &__disabled {
-    border: 2px solid red;
-    color: white;
-    background-image: url("./norway.png");
+    color: darkgray;
   }
 
   &__not-disabled {
     cursor: pointer;
-    border: 2px solid black;
+    border: 2px solid $yellow;
     background: none;
 
     &:hover {
-      background-color: navy;
-      color: red;
+      background-color: $yellow;
+      color: white;
     }
   }
 }
@@ -33,7 +34,8 @@
 .select-component-input {
   width: 100%;
   padding: 1rem;
-  border: 1px solid black;
+  border: 1px solid $yellow;
+  background-color: $blue;
   border-radius: 4px;
 }
 
