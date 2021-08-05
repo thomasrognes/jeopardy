@@ -2,61 +2,32 @@ import React, { useState } from "react";
 
 import "./Header.scss";
 import { Modal } from "../Modal/Modal";
-import { useAllTeam } from "../../hooks/teamHooks";
+import { MenuButton } from "../MenuButton/MenuButton";
+import { GameInfo } from "../GameInfo/GameInfo";
 
 export function Header() {
-  const { teams, setTeams } = useAllTeam();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [teamName, setTeamName] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [isChangeGameModalOpen, setIsChangeGameModalOpen] = useState(false);
 
   return (
     <header className="header">
-      <div />
-      <h1>Musikk Jeopardy</h1>
-      <div className="header__button">
-        <button
-          className="btn-primary btn-lg"
-          onClick={() => setIsModalOpen(true)}
-        >
-          Legg til nytt lag
-        </button>
+      <div className="header__buttons">
+        <MenuButton
+          title={"Velg spill"}
+          onClick={() => setIsChangeGameModalOpen(true)}
+        />
       </div>
-      {isModalOpen && (
+
+      {isChangeGameModalOpen && (
         <Modal
-          title={"Legg til nytt lag"}
+          title={"Endre spill"}
           hidden={false}
-          onDialogToggle={() => setIsModalOpen(!isModalOpen)}
+          onDialogToggle={() =>
+            setIsChangeGameModalOpen(!isChangeGameModalOpen)
+          }
         >
-          <form className="add-team-form" onSubmit={(e) => e.preventDefault()}>
-            <label htmlFor="name">Lagnavn</label>
-            <input
-              className="add-team-form-name"
-              type="text"
-              id="name"
-              name="Lagnavn"
-              required
-              onChange={(e) => {
-                setTeamName(e.target.value);
-                setErrorMessage("");
-              }}
-            />
-            <span className="error">{errorMessage}</span>
-          </form>
-          <button className="complete-button" onClick={onCompleteClick}>
-            Fullfør
-          </button>
+          <GameInfo />
         </Modal>
       )}
     </header>
   );
-
-  function onCompleteClick() {
-    if (teamName === "") {
-      setErrorMessage("Lagnavn kan ikke være tomt.");
-      return;
-    }
-    setTeams([...teams, { name: teamName, score: 0 }]);
-    setIsModalOpen(false);
-  }
 }

@@ -1,5 +1,15 @@
+@import "utilities/colors.scss";
+
 .App {
-  text-align: center;
   font-family: Arial, Courier, Helvetica, serif;
-  height: 100vh;
+  min-height: 100%;
+  background-color: $blue;
+  color: $yellow;
+  display: flex;
+  flex-direction: column;
+  padding: 5rem;
+}
+
+#root{
+  height: 100%;
 }

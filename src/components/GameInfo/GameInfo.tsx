@@ -37,8 +37,8 @@ export function GameInfo() {
 
       {gameInfoToShow && (
         <div className="game-info__links">
-          <span className="error">
-            Ikke vis info som ligger på linkene til deltakere
+          <span>
+            <b>NB! Kategoriene må endres manuelt.</b>
           </span>
           <span>Navn: {gameInfoToShow.name}</span>
           <span>

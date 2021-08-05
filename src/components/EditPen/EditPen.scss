@@ -1,8 +1,10 @@
+@import "src/utilities/colors.scss";
+
 svg {
   margin-top: 20px;
   margin-left: 10px;
 }
 
 svg:hover {
-  color: blue;
+  color: white;
 }
