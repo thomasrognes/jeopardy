@@ -1,24 +1,17 @@
 @import "src/utilities/colors.scss";
 
-.leader-board {
-  &__table {
-    width: 100%;
-    margin-top: 6rem;
-  }
+.add-team-modal {
+  padding: 2rem 0;
 
-  &__table-headings {
-    font-size: 20pt;
-    text-align: left;
-  }
-
-  &__button{
+  &__complete-button {
+    display: block;
+    margin: 1rem auto 0 auto;
     font-size: 12pt;
-    margin: 2rem 0;
     padding: 1rem;
     border: 2px solid $yellow;
     border-radius: 100px;
 
-    &:hover{
+    &:hover {
       color: $blue;
       background-color: $yellow;
       border: 2px solid $blue;

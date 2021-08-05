@@ -1,7 +1,9 @@
+@import "src/utilities/colors.scss";
+
 .leader-board-row {
   width: 100%;
   padding: 1rem;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid $yellow;
   font-size: 16pt;
 }
 

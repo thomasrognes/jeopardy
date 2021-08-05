@@ -1,0 +1,10 @@
+@import "src/utilities/colors.scss";
+
+.menu-button {
+  font-size: 12pt;
+
+  &:hover {
+    color: white;
+    transition: 200ms;
+  }
+}

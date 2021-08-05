@@ -1,36 +1,9 @@
+@import "src/utilities/colors.scss";
+
 .header {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  color: $yellow;
 
-  &__button {
-    margin-top: 2rem;
+  &__buttons {
+    margin: 0 1rem;
   }
-}
-
-//TODO Få dette ut i en egen komponent
-.complete-button {
-  display: block;
-  margin: 1rem auto 0 auto;
-}
-
-.add-team-form {
-  display: flex;
-  flex-direction: column;
-  padding: 2rem 0;
-}
-
-.error {
-  color: red;
-}
-
-.add-team-form-name {
-  width: 100%;
-  padding: 1rem;
-  border: 1px solid black;
-  border-radius: 4px;
-}
-
-.registered-teams {
-  display: flex;
-  flex-direction: column;
 }

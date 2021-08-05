@@ -3,7 +3,7 @@
     "id": 1,
     "name": "God blanding",
     "googleDocLink": "https://docs.google.com/spreadsheets/d/1_qbN5P81sgnFvJLZU6C7iIWxCUIDwrd1IlLHOwA9LcA/edit?usp=sharing",
-    "spotifyLink": "https://open.spotify.com/playlist/4ryGit6DIbCWiRlEKbeP9Z?si=dlEpS-jqSI67G32bqS78KA&fbclid=IwAR3olCHteBOdZyvRuIlxWqZDO4PS40dZ6WFMOavaxpI8d2PRvVd4xMwVbrU&nd=1",
+    "spotifyLink": "https://open.spotify.com/playlist/0sLD1WOLOSGewZ3wyKcHs0?si=b9c2d098e4384dab",
     "author": "NTNU"
   },
   {
@@ -12,5 +12,12 @@
     "googleDocLink": "https://docs.google.com/spreadsheets/d/1Wa-QOv6js3LAejEmlhURJv9NQaFGV2mfU-Gggq70CrE/edit?usp=sharing",
     "spotifyLink": "https://open.spotify.com/playlist/7MVOrANXDAeAbn3W1C7E07?si=649ddbe2def44bf3",
     "author": "Viktoria Utgaard"
+  },
+  {
+    "id": 3,
+    "name": "Utdrikningslag",
+    "googleDocLink": "https://docs.google.com/spreadsheets/d/12TXpLCijHW79YjUy1vJcgJr6co_HOOqJWlagKUSOARE/edit?usp=sharing",
+    "spotifyLink": "https://open.spotify.com/playlist/09P4655tSMT8pmbLlubfXa?si=083cd99c65ff4153",
+    "author": "Thomas Rognes"
   }
 ]
