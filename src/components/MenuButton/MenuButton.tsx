@@ -11,8 +11,11 @@ export function MenuButton(props: Props) {
   const { title, onClick, className } = props;
 
   return (
-    <button className={`remove-button-style menu-button ${className}`} onClick={onClick}>
-      {title}
+    <button
+      className={`remove-button-style menu-button ${className}`}
+      onClick={onClick}
+    >
+      <h3>{title}</h3>
     </button>
   );
 }

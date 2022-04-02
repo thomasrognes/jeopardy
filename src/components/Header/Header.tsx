@@ -10,12 +10,10 @@ export function Header() {
 
   return (
     <header className="header">
-      <div className="header__buttons">
-        <MenuButton
-          title={"Velg spill"}
-          onClick={() => setIsChangeGameModalOpen(true)}
-        />
-      </div>
+      <MenuButton
+        title={"Velg spill"}
+        onClick={() => setIsChangeGameModalOpen(true)}
+      />
 
       {isChangeGameModalOpen && (
         <Modal

@@ -1,0 +1,16 @@
+@import "utilities/colors.scss";
+
+body {
+  font-size: 1rem;
+  line-height: 2rem;
+  margin: 0;
+  font-family: Helvetica, sans-serif, Arial, Courier;
+  font-weight: normal;
+}
+
+#root {
+  width: 100vw;
+  min-height: 100vh;
+  background-color: $blue;
+  color: $yellow;
+}
