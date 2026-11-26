@@ -14,7 +14,7 @@ export function LeaderBoard() {
         <table className="leader-board__table">
           <thead>
             <tr className="leader-board__table-headings">
-              <th>Plassering</th>
+              <th aria-label="Plassering">#</th>
               <th>Lagnavn</th>
               <th>Poeng</th>
             </tr>

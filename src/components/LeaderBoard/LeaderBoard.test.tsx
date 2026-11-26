@@ -24,8 +24,11 @@ test("sorterer lagene etter poeng og nummererer plasseringene", () => {
   renderWithProviders(<LeaderBoard />);
 
   expect(
+    screen.getByRole("columnheader", { name: "Plassering" })
+  ).toHaveTextContent("#");
+  expect(
     screen.getAllByRole("columnheader").map((th) => th.textContent)
-  ).toEqual(["Plassering", "Lagnavn", "Poeng"]);
+  ).toEqual(["#", "Lagnavn", "Poeng"]);
   expect(leaderBoard()).toEqual([
     ["1", "Først", "900"],
     ["2", "Midten", "500"],

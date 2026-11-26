@@ -1,4 +1,5 @@
 @import "utilities/colors.scss";
+@import "src/utilities/breakpoints.scss";
 
 .App {
   font-family: Arial, Courier, Helvetica, serif;
@@ -12,4 +13,19 @@
 
 #root{
   height: 100%;
+}
+
+// Brettet fyller høyden, med poengtavlen ved siden av.
+@include large-screen {
+  .App {
+    display: grid;
+    grid-template-areas:
+      "header header"
+      "board scores";
+    grid-template-columns: minmax(0, 1fr) clamp(28rem, 24vw, 100rem);
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 2vmin 3rem;
+    height: 100vh;
+    padding: 2rem 3rem 3rem;
+  }
 }

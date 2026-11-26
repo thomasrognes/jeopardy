@@ -1,3 +1,4 @@
+@import "src/utilities/breakpoints.scss";
 .category {
   display: flex;
   flex-direction: column;
@@ -14,5 +15,40 @@
     margin-bottom: 12px;
     font-size: 19px;
     color: black;
+  }
+}
+
+@include large-screen {
+  // Radene deles mellom kategoriene, så rutene står på linje selv om et
+  // kategorinavn går over flere linjer.
+  .category {
+    display: grid;
+    grid-row: span 6;
+    grid-template-rows: subgrid;
+
+    &__name {
+      align-items: center;
+      font-size: clamp(2.4rem, 3.6vmin, 10rem);
+
+      h2 {
+        margin: 0;
+        font-size: inherit;
+        text-align: center;
+        overflow-wrap: anywhere;
+      }
+
+      .edit-pen {
+        width: 0.6em;
+        height: 0.6em;
+        margin-top: 0;
+      }
+    }
+
+    &__name-input {
+      width: 100%;
+      min-width: 0;
+      margin: 0;
+      font-size: inherit;
+    }
   }
 }

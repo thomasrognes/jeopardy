@@ -1,3 +1,12 @@
+@import "src/utilities/breakpoints.scss";
+
 .menu-button {
   padding: 0.6rem 1.4rem;
+}
+
+@include large-screen {
+  .menu-button {
+    padding: 0.4em 1.2em;
+    font-size: clamp(1.4rem, 1.5vmin, 4rem);
+  }
 }
