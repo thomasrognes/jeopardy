@@ -1,6 +1,6 @@
 @import "src/utilities/colors.scss";
 
-.add-team-modal {
+.team-form {
   padding-top: 2rem;
 
   &__field {
@@ -40,8 +40,10 @@
     color: #d32f2f;
   }
 
-  &__complete-button {
-    display: block;
-    margin: 1rem auto 0 auto;
+  &__actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
   }
 }

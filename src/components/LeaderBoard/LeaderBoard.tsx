@@ -4,10 +4,12 @@ import { useAllTeam } from "../../hooks/teamHooks";
 import "./LeaderBoard.scss";
 import { LeaderBoardRow } from "./LeaderBoardRow";
 import { AddTeamModal } from "../../AddTeamModal/AddTeamModal";
+import { EditTeamModal } from "../EditTeamModal/EditTeamModal";
 
 export function LeaderBoard() {
   const { teams } = useAllTeam();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [teamToEdit, setTeamToEdit] = useState<string | null>(null);
   return (
     <div className="leader-board">
       {teams.length > 0 && (
@@ -27,6 +29,7 @@ export function LeaderBoard() {
                   placement={index + 1}
                   teamName={team.name}
                   score={team.score}
+                  onEdit={() => setTeamToEdit(team.name)}
                   key={index}
                 />
               ))}
@@ -42,6 +45,13 @@ export function LeaderBoard() {
       </button>
 
       {isModalOpen && <AddTeamModal setIsModalOpen={setIsModalOpen} />}
+
+      {teamToEdit !== null && (
+        <EditTeamModal
+          teamName={teamToEdit}
+          onClose={() => setTeamToEdit(null)}
+        />
+      )}
     </div>
   );
 }

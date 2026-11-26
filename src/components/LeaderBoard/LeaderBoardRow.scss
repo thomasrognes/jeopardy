@@ -7,6 +7,18 @@
   font-size: 16pt;
 }
 
+.leader-board-row__edit {
+  margin-left: 0.5em;
+
+  // EditPen.scss gir alle ikoner marger som ikke passer i tabellen.
+  .edit-pen {
+    width: 0.8em;
+    height: 0.8em;
+    margin: 0;
+    vertical-align: middle;
+  }
+}
+
 td {
   padding: 1rem;
   margin-bottom: 1rem;

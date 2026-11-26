@@ -17,6 +17,7 @@ export interface BoardContextType {
   rounds: Round[];
   addRound: (round: Round) => void;
   removeLastRound: () => void;
+  replaceTeamInRounds: (from: string, to: string | null) => void;
   resetBoard: () => void;
 }
 
@@ -90,6 +91,12 @@ export function BoardContextProvider(props: Props) {
       setUsedTiles((tiles) => tiles.filter((id) => id !== last.tileId));
       setRounds((previous) => previous.slice(0, -1));
     },
+    replaceTeamInRounds: (from, to) =>
+      setRounds((previous) =>
+        previous.map((round) =>
+          round.teamName === from ? { ...round, teamName: to } : round
+        )
+      ),
     resetBoard: () => {
       setCategoryNames({});
       setUsedTiles([]);
