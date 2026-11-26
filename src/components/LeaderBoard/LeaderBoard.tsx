@@ -20,7 +20,7 @@ export function LeaderBoard() {
             </tr>
           </thead>
           <tbody>
-            {teams
+            {[...teams]
               .sort((a, b) => b.score - a.score)
               .map((team, index) => (
                 <LeaderBoardRow
@@ -41,9 +41,7 @@ export function LeaderBoard() {
         Legg til nytt lag
       </button>
 
-      {isModalOpen && (
-        <AddTeamModal setIsModalOpen={setIsModalOpen} />
-      )}
+      {isModalOpen && <AddTeamModal setIsModalOpen={setIsModalOpen} />}
     </div>
   );
 }

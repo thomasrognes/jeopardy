@@ -1,4 +1,5 @@
 import { expect, test } from "vitest";
+import { screen } from "@testing-library/react";
 import { renderWithProviders, leaderBoard, tile } from "../testUtils";
 
 // Data i localStorage kan være ødelagt eller komme fra en eldre versjon.
@@ -14,6 +15,9 @@ test.each([
   ["jeopardy.categoryNames", '{"Sted":1}'],
   ["jeopardy.usedTiles", '{"Sted-100":true}'],
   ["jeopardy.usedTiles", "[100]"],
+  ["jeopardy.rounds", "{}"],
+  ["jeopardy.rounds", "[null]"],
+  ["jeopardy.rounds", '[{"tileId":"Sted-100"}]'],
 ])("starter blankt når %s er %s", (key, stored) => {
   window.localStorage.setItem(key, stored);
 
@@ -21,6 +25,7 @@ test.each([
 
   expect(leaderBoard()).toEqual([]);
   expect(tile("Sted", 100)).toBeEnabled();
+  expect(screen.queryByRole("button", { name: /^Angre/ })).toBeNull();
 });
 
 test("beholder gyldige data selv om andre deler er ødelagt", () => {

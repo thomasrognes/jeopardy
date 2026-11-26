@@ -38,31 +38,11 @@ export function Category(props: Props) {
           <EditPen />
         </button>
       </div>
-      <ScoreButton
-        tileId={`${name}-100`}
-        score={100}
-        categoryName={categoryName}
-      />
-      <ScoreButton
-        tileId={`${name}-200`}
-        score={200}
-        categoryName={categoryName}
-      />
-      <ScoreButton
-        tileId={`${name}-300`}
-        score={300}
-        categoryName={categoryName}
-      />
-      <ScoreButton
-        tileId={`${name}-400`}
-        score={400}
-        categoryName={categoryName}
-      />
-      <ScoreButton
-        tileId={`${name}-500`}
-        score={500}
-        categoryName={categoryName}
-      />
+      <ScoreButton categoryId={name} score={100} categoryName={categoryName} />
+      <ScoreButton categoryId={name} score={200} categoryName={categoryName} />
+      <ScoreButton categoryId={name} score={300} categoryName={categoryName} />
+      <ScoreButton categoryId={name} score={400} categoryName={categoryName} />
+      <ScoreButton categoryId={name} score={500} categoryName={categoryName} />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { MenuButton } from "../MenuButton/MenuButton";
 import { GameInfo } from "../GameInfo/GameInfo";
 import { useAllTeam } from "../../hooks/teamHooks";
 import { useBoard } from "../../hooks/boardHooks";
+import { UndoButton } from "../UndoButton/UndoButton";
 
 export function Header() {
   const [isChangeGameModalOpen, setIsChangeGameModalOpen] = useState(false);
@@ -24,6 +25,7 @@ export function Header() {
           title={"Nullstill spill"}
           onClick={() => setIsResetModalOpen(true)}
         />
+        <UndoButton />
       </div>
 
       {isChangeGameModalOpen && (

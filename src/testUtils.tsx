@@ -42,10 +42,9 @@ export function tile(categoryName: string, score: number) {
   });
 }
 
-export function teamSelect() {
-  return screen.getByRole("combobox", {
-    name: "Velg laget som gjettet korrekt:",
-  });
+// En knapp i den åpne dialogen.
+export function dialogButton(name: string) {
+  return within(screen.getByRole("dialog")).getByRole("button", { name });
 }
 
 export async function awardPoints(
@@ -54,8 +53,12 @@ export async function awardPoints(
   teamName: string
 ) {
   await userEvent.click(tile(categoryName, score));
-  await userEvent.selectOptions(teamSelect(), teamName);
-  await userEvent.click(screen.getByText("Legg til poeng"));
+  await userEvent.click(dialogButton(teamName));
+}
+
+export async function awardNoPoints(categoryName: string, score: number) {
+  await userEvent.click(tile(categoryName, score));
+  await userEvent.click(dialogButton("Ingen gjettet riktig"));
 }
 
 export async function closeModal() {

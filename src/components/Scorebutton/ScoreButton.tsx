@@ -5,22 +5,22 @@ import { useAllTeam } from "../../hooks/teamHooks";
 import { Modal } from "../Modal/Modal";
 import classNames from "classnames";
 import { useBoard } from "../../hooks/boardHooks";
+import { useRounds } from "../../hooks/roundHooks";
 
 interface Props {
-  tileId: string;
+  categoryId: string;
   score: number;
   categoryName: string;
 }
 
 export function ScoreButton(props: Props) {
-  const [winnerTeam, setWinnerTeam] = useState<string>();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [isOnlyWrongAnswers, setIsOnlyWrongAnswers] = useState(false);
-  const { tileId, score, categoryName } = props;
+  const { categoryId, score, categoryName } = props;
+  const tileId = `${categoryId}-${score}`;
 
-  const { teams, setTeams } = useAllTeam();
-  const { usedTiles, markTileAsUsed } = useBoard();
+  const { teams } = useAllTeam();
+  const { usedTiles } = useBoard();
+  const { completeRound } = useRounds();
   const isDisabled = usedTiles.includes(tileId);
 
   const classNamesForScoreButton = classNames({
@@ -33,7 +33,7 @@ export function ScoreButton(props: Props) {
     <>
       <button
         className={classNamesForScoreButton}
-        onClick={openModal}
+        onClick={() => setIsModalOpen(true)}
         disabled={isDisabled}
       >
         {score}
@@ -44,92 +44,40 @@ export function ScoreButton(props: Props) {
           // The tile is not marked as used, since players can pick the wrong one.
           onClose={() => setIsModalOpen(false)}
         >
-          <div className="select-component">
-            <label htmlFor="teams">Velg laget som gjettet korrekt:</label>
-            <select
-              className="select-component-input"
-              name="teams"
-              id="teams"
-              onChange={(e) => {
-                setErrorMessage("");
-                setWinnerTeam(e.target.value);
-              }}
-            >
-              <option value={undefined} />
-              {teams.map((team, index) => (
-                <option value={team.name} key={index}>
+          <div className="score-dialog">
+            {/* Dialogen gir fokus hit, så et ekstra Enter-trykk ikke gir poeng. */}
+            <p className="score-dialog__question" tabIndex={-1}>
+              {teams.length > 0
+                ? "Hvem gjettet riktig?"
+                : "Ingen lag er lagt til ennå."}
+            </p>
+            <div className="score-dialog__teams">
+              {teams.map((team) => (
+                <button
+                  type="button"
+                  className="pill-button pill-button--primary score-dialog__button"
+                  onClick={() => finish(team.name)}
+                  key={team.name}
+                >
                   {team.name}
-                </option>
+                </button>
               ))}
-            </select>
-            {errorMessage && <span className="error">{errorMessage}</span>}
-
-            <div className="checkbox-component">
-              <input
-                type={"checkbox"}
-                id="noAnswers"
-                name="noAnswers"
-                checked={isOnlyWrongAnswers}
-                onChange={() => setIsOnlyWrongAnswers(!isOnlyWrongAnswers)}
-              />
-              <label className={"checkbox-component-label"} htmlFor="noAnswers">
-                Ingen gjettet riktig.
-              </label>
             </div>
+            <button
+              type="button"
+              className="pill-button pill-button--secondary score-dialog__button"
+              onClick={() => finish(null)}
+            >
+              Ingen gjettet riktig
+            </button>
           </div>
-          <button
-            type="button"
-            className="pill-button pill-button--primary add-points-button"
-            onClick={addScore}
-          >
-            Legg til poeng
-          </button>
         </Modal>
       )}
     </>
   );
 
-  function openModal() {
-    // Nothing from an earlier, cancelled attempt should carry over.
-    setWinnerTeam(undefined);
-    setErrorMessage("");
-    setIsOnlyWrongAnswers(false);
-    setIsModalOpen(true);
-  }
-
-  function completeRound() {
-    markTileAsUsed(tileId);
+  function finish(teamName: string | null) {
+    completeRound({ tileId, categoryId, score, teamName });
     setIsModalOpen(false);
-  }
-
-  function addScore() {
-    if (isOnlyWrongAnswers) {
-      completeRound();
-      return;
-    }
-
-    if (!winnerTeam) {
-      setErrorMessage("Påkrevd felt.");
-      return;
-    }
-
-    const teamToGetPoints = teams.find((team) => team.name === winnerTeam);
-
-    if (!teamToGetPoints) {
-      setErrorMessage("Laget finnes ikke..");
-      return;
-    }
-
-    const index = teams.indexOf(teamToGetPoints);
-
-    // Changing the object of the team to update score before adding the new object to teams array
-    const teamsArray = [...teams];
-    teamsArray[index] = {
-      ...teamToGetPoints,
-      score: teamToGetPoints.score + score,
-    };
-    setTeams(teamsArray);
-
-    completeRound();
   }
 }

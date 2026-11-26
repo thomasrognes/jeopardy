@@ -2,8 +2,10 @@ import { expect, test } from "vitest";
 import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import {
+  awardNoPoints,
   category,
   closeModal,
+  dialogButton,
   editButton,
   renameCategory,
   renderWithProviders,
@@ -46,9 +48,7 @@ test("bruker det nye navnet i poengdialogen", async () => {
 
 test("beholder brukte ruter når kategorien får nytt navn", async () => {
   renderWithProviders();
-  await userEvent.click(tile("Sted", 100));
-  await userEvent.click(screen.getByLabelText("Ingen gjettet riktig."));
-  await userEvent.click(screen.getByText("Legg til poeng"));
+  await awardNoPoints("Sted", 100);
 
   await renameCategory("Sted", "Film");
 
@@ -64,8 +64,7 @@ test("holder rutene adskilt selv om to kategorier får samme navn", async () => 
   await userEvent.click(within(first).getByRole("button", { name: "100" }));
   await closeModal();
   await userEvent.click(within(first).getByRole("button", { name: "100" }));
-  await userEvent.click(screen.getByLabelText("Ingen gjettet riktig."));
-  await userEvent.click(screen.getByText("Legg til poeng"));
+  await userEvent.click(dialogButton("Ingen gjettet riktig"));
 
   expect(within(first).getByRole("button", { name: "100" })).toBeDisabled();
   expect(within(second).getByRole("button", { name: "100" })).toBeEnabled();
