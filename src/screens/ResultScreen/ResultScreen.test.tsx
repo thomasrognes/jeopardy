@@ -69,17 +69,14 @@ test("gir lag med like mange poeng samme plassering", () => {
   expect(listItems("Øvrige lag")).toEqual(["4. Lag 4 · 100 poeng"]);
 });
 
-test.each([[[]], [[0, 0]]])(
-  "kårer ingen vinner uten poeng (%s)",
-  (scores: number[]) => {
-    storeScores(...scores);
+test("kårer ingen vinner når ingen har poeng", () => {
+  storeScores(0, 0);
 
-    renderScreen("result");
+  renderScreen("result");
 
-    expect(title()).toHaveTextContent("Ingen vinner ennå");
-    expect(screen.queryByRole("list")).not.toBeInTheDocument();
-  }
-);
+  expect(title()).toHaveTextContent("Ingen vinner ennå");
+  expect(screen.queryByRole("list")).not.toBeInTheDocument();
+});
 
 test("går tilbake til brettet med poengene i behold", async () => {
   storeScores(300);

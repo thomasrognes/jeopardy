@@ -18,7 +18,12 @@ export function store(key: string, value: unknown) {
   window.localStorage.setItem(`jeopardy.${key}`, JSON.stringify(value));
 }
 
+// Brettet og resultatet finnes bare når det er lag, så ett lagres om testen
+// ikke har lagret noen selv.
 export function renderScreen(screenName: Screen) {
+  if (window.localStorage.getItem("jeopardy.teams") === null) {
+    store("teams", [{ name: "Lag 1", score: 0 }]);
+  }
   store("screen", screenName);
   return renderWithProviders();
 }

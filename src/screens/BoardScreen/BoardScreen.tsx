@@ -33,12 +33,13 @@ export function BoardScreen(props: Props) {
       </header>
 
       <main className="play__board">
-        <Board />
+        <Board onLastTileUsed={() => onNavigate("result")} />
       </main>
 
       <footer className="play__footer">
         <div className="play__status">
           <UndoToast />
+          {/* Veien videre hvis man har gått tilbake fra resultatet. */}
           {remainingTiles === 0 && (
             <button
               type="button"

@@ -43,7 +43,6 @@ test("viser fire kategorier med fem ruter hver", () => {
 });
 
 test("har ingen felter eller knapper for redigering", () => {
-  store("teams", [{ name: "Lag 1", score: 0 }]);
   renderScreen("board");
 
   expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
@@ -98,18 +97,6 @@ test("går tilbake uten å bruke ruten", async () => {
   expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   expect(tile("Sted", 100)).toBeEnabled();
   expect(scoreboard()).toEqual(["Lag 10"]);
-});
-
-test("kan avslutte en runde uten lag", async () => {
-  renderScreen("board");
-  await userEvent.click(tile("Sted", 100));
-  expect(
-    within(screen.getByRole("dialog")).getByText("Ingen lag er lagt til ennå.")
-  ).toBeInTheDocument();
-
-  await userEvent.click(dialogButton("Ingen svarte riktig"));
-
-  expect(tile("Sted", 100)).toBeDisabled();
 });
 
 // --- Poengtavlen ---
@@ -269,18 +256,78 @@ test("har lenker til fasit og spilleliste bare når et spill er valgt", async ()
   );
 });
 
-test("tilbyr å kåre vinner når alle rutene er brukt", async () => {
+// Alle rutene unntatt «Sted 100» er brukt.
+function storeLastTile() {
+  store("teams", [{ name: "Lag 1", score: 0 }]);
   store("usedTiles", allTiles.slice(1));
+}
+
+function resultTitle(name: string) {
+  return screen.queryByRole("heading", { level: 1, name });
+}
+
+test("går til resultatet når siste poengsum deles ut", async () => {
+  storeLastTile();
   renderScreen("board");
   expect(screen.getByText("1 rute igjen")).toBeInTheDocument();
-  expect(
-    screen.queryByRole("button", { name: "Kår vinner" })
-  ).not.toBeInTheDocument();
+
+  await awardPoints("Sted", 100, "Lag 1");
+
+  expect(resultTitle("Lag 1")).toBeInTheDocument();
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+});
+
+test("går til resultatet også når ingen svarte på den siste", async () => {
+  storeLastTile();
+  renderScreen("board");
 
   await awardNoPoints("Sted", 100);
+
+  expect(resultTitle("Ingen vinner ennå")).toBeInTheDocument();
+});
+
+test("blir på brettet så lenge det er ruter igjen", async () => {
+  store("usedTiles", allTiles.slice(2));
+  renderScreen("board");
+
+  await awardNoPoints("Sted", 100);
+
+  expect(screen.getByText("1 rute igjen")).toBeInTheDocument();
+});
+
+test("blir på brettet når den siste ruten åpnes og lukkes", async () => {
+  storeLastTile();
+  renderScreen("board");
+  await userEvent.click(tile("Sted", 100));
+
+  await userEvent.click(
+    screen.getByRole("button", { name: /Tilbake til brettet/ })
+  );
+
+  expect(screen.getByText("1 rute igjen")).toBeInTheDocument();
+});
+
+test("kan gå tilbake til brettet og angre den siste runden", async () => {
+  storeLastTile();
+  renderScreen("board");
+  await awardPoints("Sted", 100, "Lag 1");
+
+  await click("Tilbake til brettet");
+  expect(screen.getByText("0 ruter igjen")).toBeInTheDocument();
+  await userEvent.click(undoButton()!);
+  expect(tile("Sted", 100)).toBeEnabled();
+
+  await awardPoints("Sted", 100, "Lag 1");
+  expect(resultTitle("Lag 1")).toBeInTheDocument();
+});
+
+test("kan gå til resultatet igjen fra et ferdig brett", async () => {
+  store("usedTiles", allTiles);
+  renderScreen("board");
+
   await click("Kår vinner");
 
   expect(
-    screen.getByRole("button", { name: "Tilbake til brettet" })
+    screen.getByRole("button", { name: "Nytt spill" })
   ).toBeInTheDocument();
 });

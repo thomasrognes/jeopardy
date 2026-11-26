@@ -7,10 +7,6 @@ export function Scoreboard() {
   const { teams } = useAllTeam();
   const best = Math.max(0, ...teams.map((team) => team.score));
 
-  if (teams.length === 0) {
-    return <p className="muted play__no-teams">Ingen lag er lagt til ennå.</p>;
-  }
-
   return (
     <ul
       // Flere enn fire lag får smalere kort med navnet over poengene.

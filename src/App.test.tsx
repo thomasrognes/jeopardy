@@ -1,12 +1,15 @@
 import { expect, test } from "vitest";
 import { screen } from "@testing-library/react";
 import {
+  addTeam,
   awardPoints,
   chooseFromMenu,
   click,
+  renderScreen,
   renderWithProviders,
   scoreboard,
   startGame,
+  store,
   teamNames,
   tile,
 } from "./testUtils";
@@ -47,6 +50,22 @@ test("en hel spillkveld fra oppsett til nytt spill", async () => {
   expect(scoreboard()).toEqual(["Rødt lag0", "Blått lag0"]);
   expect(tile("Sted", 100)).toBeEnabled();
 });
+
+test.each(["board", "result"] as const)(
+  "viser oppsettet i stedet for «%s» når det ikke finnes lag",
+  async (screenName) => {
+    store("teams", []);
+    renderScreen(screenName);
+    expect(
+      screen.getByRole("button", { name: "Start spillet" })
+    ).toBeDisabled();
+
+    await addTeam("Lag 1");
+
+    expect(teamNames()).toEqual(["Lag 1"]);
+    expect(screen.getByRole("button", { name: "Start spillet" })).toBeEnabled();
+  }
+);
 
 test("husker spillet og hvilken skjerm man var på", async () => {
   const { unmount } = await startGame("Lag 1");

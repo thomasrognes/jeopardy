@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { toTileId } from "../../game/categories";
 import { useBoard } from "../../hooks/boardHooks";
+import { useGame } from "../../hooks/gameHooks";
 import { useRounds } from "../../hooks/roundHooks";
 import { AwardDialog } from "./AwardDialog";
 
@@ -8,13 +9,16 @@ interface Props {
   categoryId: string;
   categoryName: string;
   score: number;
+  // Kalles når den siste ledige ruten er brukt opp.
+  onLastTileUsed: () => void;
 }
 
 export function Tile(props: Props) {
-  const { categoryId, categoryName, score } = props;
+  const { categoryId, categoryName, score, onLastTileUsed } = props;
   const [isOpen, setIsOpen] = useState(false);
   const { usedTiles } = useBoard();
   const { completeRound } = useRounds();
+  const { remainingTiles } = useGame();
   const tileId = toTileId(categoryId, score);
   const isUsed = usedTiles.includes(tileId);
 
@@ -39,6 +43,9 @@ export function Tile(props: Props) {
           onAward={(teamName) => {
             completeRound({ tileId, categoryId, score, teamName });
             setIsOpen(false);
+            if (remainingTiles === 1) {
+              onLastTileUsed();
+            }
           }}
         />
       )}

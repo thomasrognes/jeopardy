@@ -249,6 +249,41 @@ test("oppsummerer valget under startknappen", async () => {
   expect(screen.getByText(`${gameInfo[1].name} · 1 lag`)).toBeInTheDocument();
 });
 
+function startButton() {
+  return screen.getByRole("button", { name: /^(Start|Fortsett) spillet$/ });
+}
+
+const noTeamsHint = "Legg til minst ett lag for å starte.";
+
+test("kan ikke starte uten lag", async () => {
+  renderWithProviders();
+  expect(startButton()).toBeDisabled();
+  expect(startButton()).toHaveAccessibleDescription(noTeamsHint);
+
+  await userEvent.click(startButton());
+
+  expect(screen.queryByRole("group")).not.toBeInTheDocument();
+});
+
+test("kan starte når det finnes et lag, til det fjernes igjen", async () => {
+  renderWithProviders();
+
+  await addTeam("Lag 1");
+  expect(startButton()).toBeEnabled();
+  expect(screen.queryByText(noTeamsHint)).not.toBeInTheDocument();
+
+  await click("Fjern Lag 1");
+  expect(startButton()).toBeDisabled();
+});
+
+test("kan ikke fortsette et spill når alle lagene er fjernet", () => {
+  store("usedTiles", ["Sted-100"]);
+  renderWithProviders();
+
+  expect(startButton()).toHaveAccessibleName("Fortsett spillet");
+  expect(startButton()).toBeDisabled();
+});
+
 test("tilbyr ikke nytt spill før noe er spilt", () => {
   renderWithProviders();
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 
 import "./SetupScreen.scss";
 import type { Screen } from "../../App";
@@ -21,7 +21,13 @@ export function SetupScreen(props: Props) {
   const [selectedGame, selectGame] = useSelectedGame();
   const [isConfirmingNewGame, setIsConfirmingNewGame] = useState(false);
 
+  const summaryId = useId();
+
+  const hasTeams = teams.length > 0;
   const teamCount = `${teams.length} lag`;
+  const summary = selectedGame
+    ? `${selectedGame.name} · ${teamCount}`
+    : teamCount;
 
   return (
     <div className="setup">
@@ -52,11 +58,13 @@ export function SetupScreen(props: Props) {
           type="button"
           className="button button--primary"
           onClick={() => onNavigate("board")}
+          disabled={!hasTeams}
+          aria-describedby={summaryId}
         >
           {isInProgress ? "Fortsett spillet" : "Start spillet"}
         </button>
-        <p className="muted">
-          {selectedGame ? `${selectedGame.name} · ${teamCount}` : teamCount}
+        <p id={summaryId} className="muted">
+          {hasTeams ? summary : "Legg til minst ett lag for å starte."}
         </p>
         {isInProgress && (
           <button

@@ -28,26 +28,20 @@ export function AwardDialog(props: Props) {
         </>
       }
     >
-      <p className="award__question">
-        {teams.length > 0
-          ? "Hvem svarte riktig?"
-          : "Ingen lag er lagt til ennå."}
-      </p>
-      {teams.length > 0 && (
-        <div className="award__teams">
-          {teams.map((team, index) => (
-            <button
-              type="button"
-              className="award__team"
-              style={{ backgroundColor: teamColor(team, index) }}
-              onClick={() => onAward(team.name)}
-              key={team.name}
-            >
-              {team.name}
-            </button>
-          ))}
-        </div>
-      )}
+      <p className="award__question">Hvem svarte riktig?</p>
+      <div className="award__teams">
+        {teams.map((team, index) => (
+          <button
+            type="button"
+            className="award__team"
+            style={{ backgroundColor: teamColor(team, index) }}
+            onClick={() => onAward(team.name)}
+            key={team.name}
+          >
+            {team.name}
+          </button>
+        ))}
+      </div>
       <button
         type="button"
         className="button button--outline"

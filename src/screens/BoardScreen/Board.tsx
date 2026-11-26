@@ -3,7 +3,12 @@ import { CATEGORY_IDS, SCORES, toCategoryName } from "../../game/categories";
 import { useBoard } from "../../hooks/boardHooks";
 import { Tile } from "./Tile";
 
-export function Board() {
+interface Props {
+  onLastTileUsed: () => void;
+}
+
+export function Board(props: Props) {
+  const { onLastTileUsed } = props;
   const { categoryNames } = useBoard();
 
   return (
@@ -23,6 +28,7 @@ export function Board() {
                 categoryId={categoryId}
                 categoryName={name}
                 score={score}
+                onLastTileUsed={onLastTileUsed}
                 key={score}
               />
             ))}
