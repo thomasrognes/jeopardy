@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "../components/Modal/Modal";
 import { useAllTeam } from "../hooks/teamHooks";
-import { TextField } from "@material-ui/core";
+import { TextField } from "@mui/material";
 
 import "./AddTeamModal.scss";
 
@@ -30,8 +30,10 @@ export function AddTeamModal(props: Props) {
           fullWidth
           required
           error={errorMessage !== ""}
-          inputProps={{ style: { fontSize: 20 } }} // font size of input text
-          InputLabelProps={{ style: { fontSize: 15 } }} // font size of input label
+          slotProps={{
+            htmlInput: { style: { fontSize: 20 } }, // font size of input text
+            inputLabel: { style: { fontSize: 15 } }, // font size of input label
+          }}
           onChange={(e) => {
             setTeamName(e.target.value);
             setErrorMessage("");
