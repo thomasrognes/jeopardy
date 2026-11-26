@@ -1,56 +1,71 @@
-import React from "react";
-import ReactDOM from "react-dom";
-// @ts-ignore
-import CoreDialog from "@nrk/core-dialog/jsx";
+import React, { useId, useLayoutEffect, useRef } from "react";
+import { createPortal } from "react-dom";
+import classNames from "classnames";
 
 import "./Modal.scss";
 import { CrossIcon } from "../crossIcon/CrossIcon";
-import classNames from "classnames";
 
 interface Props {
-  title: string;
-  hidden: boolean;
-  onDialogToggle: () => void;
+  title: React.ReactNode;
+  onClose: () => void;
   children: React.ReactNode;
-  strict?: boolean;
-  classNameForModal?: string;
+  // Fyller hele skjermen og har en tilbakeknapp i stedet for kryss.
+  fullscreen?: boolean;
 }
 
 export function Modal(props: Props) {
-  const {
-    title,
-    hidden,
-    onDialogToggle,
-    children,
-    strict = false,
-    classNameForModal,
-  } = props;
+  const { title, onClose, children, fullscreen = false } = props;
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const titleId = useId();
 
-  const modalRoot = document.getElementById("modal-root");
+  // Layout effect, slik at close() kjører mens dialogen fortsatt ligger i
+  // DOM-en. Da flytter nettleseren fokus tilbake dit det var.
+  useLayoutEffect(() => {
+    const dialog = dialogRef.current!;
+    dialog.showModal();
+    return () => dialog.close();
+  }, []);
 
-  if (!modalRoot) {
-    throw Error("Could not find he DOM element to render modal in.");
-  }
-
-  return ReactDOM.createPortal(
-    <div className={classNames("modal", classNameForModal)}>
-      <CoreDialog
-        className="modal__content"
-        hidden={hidden}
-        strict={strict}
-        backdrop={true}
-        onDialogToggle={onDialogToggle}
-      >
-        <h3 className="modal__title">{title}</h3>
-        {children}
+  return createPortal(
+    <dialog
+      ref={dialogRef}
+      className={classNames("app-modal", {
+        "app-modal--fullscreen": fullscreen,
+      })}
+      aria-labelledby={titleId}
+      onClose={() => {
+        // close-hendelsen kommer asynkront. Strict Mode lukker og åpner
+        // dialogen på nytt, og da skal den forbli åpen.
+        if (!dialogRef.current?.open) {
+          onClose();
+        }
+      }}
+    >
+      {/* Står først, så den får fokus: et ekstra Enter-trykk går tilbake. */}
+      {fullscreen && (
         <button
-          onClick={onDialogToggle}
-          className="modal__close-button remove-button-style"
+          type="button"
+          onClick={onClose}
+          className="button app-modal__back-button"
+        >
+          <span aria-hidden="true">←&nbsp;</span>Tilbake til brettet
+        </button>
+      )}
+      <h2 id={titleId} className="app-modal__title">
+        {title}
+      </h2>
+      {children}
+      {!fullscreen && (
+        <button
+          type="button"
+          onClick={onClose}
+          className="app-modal__close-button"
+          aria-label="Lukk"
         >
           <CrossIcon />
         </button>
-      </CoreDialog>
-    </div>,
-    modalRoot
+      )}
+    </dialog>,
+    document.body
   );
 }

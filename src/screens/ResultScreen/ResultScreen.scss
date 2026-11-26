@@ -1,0 +1,112 @@
+.result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4vmin;
+  min-height: 100vh;
+  padding: 4vmin 24px;
+  background-color: var(--color-stage);
+  text-align: center;
+
+  &__eyebrow {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 4vmin, 64px);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  &__winner {
+    color: var(--color-gold);
+    font-family: var(--font-display);
+    font-size: clamp(48px, 12vmin, 200px);
+    font-weight: 800;
+    line-height: 1;
+    text-shadow: 0 0.05em 0 var(--color-background);
+    overflow-wrap: anywhere;
+  }
+
+  &__others {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 24px;
+    font-size: clamp(15px, 2vmin, 32px);
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+  }
+}
+
+.podium {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: end;
+  gap: 16px;
+  width: 100%;
+  max-width: 100vmin;
+
+  &__place {
+    display: flex;
+    flex-direction: column;
+    gap: 1vmin;
+    grid-row: 1;
+
+    // Vinneren står i midten, nummer to til venstre og nummer tre til høyre.
+    &:nth-child(1) {
+      grid-column: 2;
+    }
+
+    &:nth-child(2) {
+      grid-column: 1;
+    }
+
+    &:nth-child(3) {
+      grid-column: 3;
+    }
+  }
+
+  &__name {
+    font-size: clamp(16px, 2.2vmin, 36px);
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
+
+  &__block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px 18px 0 0;
+    color: var(--color-background);
+    font-family: var(--font-display);
+    font-weight: 800;
+    line-height: 1.1;
+
+    &--1 {
+      height: 28vmin;
+    }
+
+    &--2 {
+      height: 21vmin;
+    }
+
+    &--3 {
+      height: 16vmin;
+    }
+  }
+
+  &__placement {
+    font-size: 8vmin;
+  }
+
+  &__score {
+    font-size: 4.4vmin;
+  }
+}

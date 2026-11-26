@@ -1,14 +1,15 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
+import { createRoot } from "react-dom/client";
 import App from "./App";
 import { TeamsContextProvider } from "./context/TeamContext";
+import { BoardContextProvider } from "./context/BoardContext";
 
-ReactDOM.render(
+createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <TeamsContextProvider>
-      <App />
+      <BoardContextProvider>
+        <App />
+      </BoardContextProvider>
     </TeamsContextProvider>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );

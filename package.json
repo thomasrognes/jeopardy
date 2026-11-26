@@ -4,25 +4,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.12.2",
-    "@material-ui/icons": "^4.11.2",
-    "@testing-library/jest-dom": "^5.12.0",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
-    "@types/jest": "^26.0.23",
-    "@types/node": "^15.3.1",
-    "@types/react": "^17.0.6",
-    "@types/react-dom": "^17.0.5",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3",
-    "typescript": "^4.2.4",
-    "web-vitals": "^1.1.2"
+    "@fontsource/barlow-condensed": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/jest-dom": "^8.0.0",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.13",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-scripts": "^5.0.1",
+    "web-vitals": "^6.2.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "vitest",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
@@ -46,10 +42,18 @@
     ]
   },
   "devDependencies": {
-    "@nrk/core-dialog": "^3.0.7",
+    "@types/node": "^24.19.4",
+    "@types/react": "^19.3.3",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "@vitest/coverage-v8": "^5.1.2",
     "classnames": "^2.3.1",
-    "gh-pages": "^3.1.0",
-    "node-sass": "^6.0.0",
-    "prettier": "^2.3.0"
+    "gh-pages": "^6.3.0",
+    "jsdom": "^31.0.1",
+    "prettier": "^3.10.1",
+    "sass": "^1.108.2",
+    "typescript": "^5.9.3",
+    "vite": "^8.4.0",
+    "vitest": "^5.1.2"
   }
 }

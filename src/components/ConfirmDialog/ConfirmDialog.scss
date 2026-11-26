@@ -1,0 +1,14 @@
+.confirm {
+  &__message {
+    margin-top: 16px;
+    font-size: 17px;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 28px;
+  }
+}

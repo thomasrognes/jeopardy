@@ -1,0 +1,113 @@
+@import "@fontsource/barlow-condensed/latin-600.css";
+@import "@fontsource/barlow-condensed/latin-700.css";
+@import "@fontsource/barlow-condensed/latin-800.css";
+@import "@fontsource/inter/latin-400.css";
+@import "@fontsource/inter/latin-600.css";
+@import "@fontsource/inter/latin-700.css";
+
+:root {
+  --color-background: #0a0f2c;
+  --color-stage: #16237a;
+  --color-panel: #141c4f;
+  --color-panel-strong: #17205a;
+  --color-tile: #22359c;
+  --color-tile-highlight: #4258c9;
+  --color-tile-shadow: #121c5e;
+  --color-tile-used: #10163d;
+  --color-line: #3a49a8;
+  --color-gold: #ffc933;
+  --color-gold-shadow: #8a6a0c;
+  --color-text: #ffffff;
+  --color-muted: #aab4e8;
+  --color-error: #ffb4ab;
+  --color-danger: #b3261e;
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+a {
+  color: var(--color-text);
+
+  &:hover {
+    color: var(--color-gold);
+  }
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+// Tydelig markering av hvor man er når man bruker tastaturet.
+:focus-visible {
+  outline: 3px solid var(--color-text);
+  outline-offset: 3px;
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.muted {
+  color: var(--color-muted);
+}
+
+.error {
+  color: var(--color-error);
+  font-size: 14px;
+}
+
+.text-field {
+  width: 100%;
+  min-width: 0;
+  height: 56px;
+  padding: 0 16px;
+  border: 2px solid var(--color-line);
+  border-radius: 12px;
+  background-color: var(--color-background);
+  font-size: 18px;
+  font-weight: 600;
+
+  &::placeholder {
+    color: var(--color-muted);
+    font-weight: 400;
+  }
+
+  &[aria-invalid="true"] {
+    border-color: var(--color-error);
+  }
+}
