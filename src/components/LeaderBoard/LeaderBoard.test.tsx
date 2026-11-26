@@ -35,3 +35,21 @@ test("sorterer lagene etter poeng og nummererer plasseringene", () => {
     ["3", "Sist", "100"],
   ]);
 });
+
+test("gir lag med like mange poeng samme plassering", () => {
+  storeTeams([
+    { name: "A", score: 500 },
+    { name: "B", score: 900 },
+    { name: "C", score: 500 },
+    { name: "D", score: 100 },
+  ]);
+
+  renderWithProviders(<LeaderBoard />);
+
+  expect(leaderBoard()).toEqual([
+    ["1", "B", "900"],
+    ["2", "A", "500"],
+    ["2", "C", "500"],
+    ["4", "D", "100"],
+  ]);
+});

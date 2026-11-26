@@ -59,7 +59,7 @@ test("trekker tilbake poengene og åpner ruten igjen", async () => {
 
   expect(leaderBoard()).toEqual([
     ["1", "Lag 1", "0"],
-    ["2", "Lag 2", "0"],
+    ["1", "Lag 2", "0"],
   ]);
   expect(tile("Sted", 300)).toBeEnabled();
   expect(undoButton()).not.toBeInTheDocument();

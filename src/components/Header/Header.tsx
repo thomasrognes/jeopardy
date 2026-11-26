@@ -16,6 +16,7 @@ export function Header() {
 
   return (
     <header className="header">
+      <h1 className="header__title">Jeopardy</h1>
       <div className="header__buttons">
         <MenuButton
           title={"Velg spill"}

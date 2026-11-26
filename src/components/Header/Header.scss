@@ -2,7 +2,18 @@
 @import "src/utilities/breakpoints.scss";
 
 .header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
   color: $yellow;
+
+  &__title {
+    margin: 0;
+    font-size: 24pt;
+    font-weight: bold;
+  }
 
   &__buttons {
     display: flex;
@@ -26,5 +37,9 @@
 @include large-screen {
   .header {
     grid-area: header;
+
+    &__title {
+      font-size: clamp(2.4rem, 3.5vmin, 10rem);
+    }
   }
 }

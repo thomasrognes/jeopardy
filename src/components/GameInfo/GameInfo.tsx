@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import gameInfo from "../../json/gameInfo.json";
+import { usePersistedState } from "../../hooks/usePersistedState";
 
 import "./GameInfo.scss";
 
@@ -8,11 +9,16 @@ interface GameInfoType {
   name: string;
   googleDocLink: string;
   spotifyLink: string;
-  author: string;
+}
+
+function isGameId(value: unknown): value is number | null {
+  return typeof value === "number" || value === null;
 }
 
 export function GameInfo() {
-  const [currentGameInfo, setCurrentGameInfo] = useState<number>();
+  const [currentGameInfo, setCurrentGameInfo] = usePersistedState<
+    number | null
+  >("jeopardy.gameId", null, isGameId);
 
   const gameInfoToShow: GameInfoType | undefined = gameInfo.find(
     (game) => game.id === currentGameInfo
@@ -25,9 +31,12 @@ export function GameInfo() {
         className="select-component-input"
         name="teams"
         id="teams"
-        onChange={(e) => setCurrentGameInfo(parseInt(e.target.value))}
+        value={gameInfoToShow?.id ?? ""}
+        onChange={(e) =>
+          setCurrentGameInfo(e.target.value ? Number(e.target.value) : null)
+        }
       >
-        <option value={undefined} />
+        <option value="" />
         {gameInfo.map((game, index) => (
           <option value={game.id} key={index}>
             {game.name}
@@ -40,28 +49,20 @@ export function GameInfo() {
           <span>
             <b>NB! Kategoriene må endres manuelt.</b>
           </span>
-          <span>Navn: {gameInfoToShow.name}</span>
-          <span>
-            Google doc link:{" "}
-            <a
-              href={gameInfoToShow.googleDocLink}
-              target={"_blank"}
-              rel="noreferrer"
-            >
-              Fasit (Google docs)
-            </a>
-          </span>
-          <span>
-            Spotify link:{" "}
-            <a
-              href={gameInfoToShow.spotifyLink}
-              target={"_blank"}
-              rel="noreferrer"
-            >
-              Sanger (Spotify)
-            </a>
-          </span>
-          <span>Creator: {gameInfoToShow.author}</span>
+          <a
+            href={gameInfoToShow.googleDocLink}
+            target={"_blank"}
+            rel="noreferrer"
+          >
+            Fasit (Google docs)
+          </a>
+          <a
+            href={gameInfoToShow.spotifyLink}
+            target={"_blank"}
+            rel="noreferrer"
+          >
+            Sanger (Spotify)
+          </a>
         </div>
       )}
     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { ScoreButton } from "../Scorebutton/ScoreButton";
 
 import "./Category.scss";
@@ -14,24 +14,39 @@ export function Category(props: Props) {
 
   const [editing, setEditing] = useState(false);
   const { categoryNames, setCategoryName } = useBoard();
+  const editButtonRef = useRef<HTMLButtonElement>(null);
   // `name` er standardnavnet, og brukes også som fast id for kategorien.
-  const categoryName = categoryNames[name] ?? name;
+  const typedName = categoryNames[name] ?? name;
+  const categoryName = typedName.trim() || name;
 
   return (
     <div className="category" role="group" aria-label={categoryName}>
       <div className="category__name">
         {editing ? (
-          <input
-            value={categoryName}
-            onChange={(e) => setCategoryName(name, e.target.value)}
-            className="category__name-input"
-            aria-label="Kategorinavn"
-          />
+          <form
+            className="category__name-form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              finishEditing();
+              editButtonRef.current?.focus();
+            }}
+          >
+            <input
+              value={typedName}
+              onChange={(e) => setCategoryName(name, e.target.value)}
+              onFocus={(e) => e.target.select()}
+              className="category__name-input"
+              aria-label="Kategorinavn"
+              autoFocus
+            />
+          </form>
         ) : (
           <h2>{categoryName}</h2>
         )}
         <button
-          onClick={() => setEditing(!editing)}
+          ref={editButtonRef}
+          type="button"
+          onClick={() => (editing ? finishEditing() : setEditing(true))}
           className="remove-button-style"
           aria-label="Rediger kategorinavn"
         >
@@ -45,4 +60,9 @@ export function Category(props: Props) {
       <ScoreButton categoryId={name} score={500} categoryName={categoryName} />
     </div>
   );
+
+  function finishEditing() {
+    setCategoryName(name, categoryName);
+    setEditing(false);
+  }
 }

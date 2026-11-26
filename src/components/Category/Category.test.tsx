@@ -69,3 +69,46 @@ test("holder rutene adskilt selv om to kategorier får samme navn", async () => 
   expect(within(first).getByRole("button", { name: "100" })).toBeDisabled();
   expect(within(second).getByRole("button", { name: "100" })).toBeEnabled();
 });
+
+test("setter markøren i feltet og markerer navnet", async () => {
+  renderWithProviders();
+
+  await userEvent.click(editButton(category("Sted")));
+  const input = screen.getByRole<HTMLInputElement>("textbox");
+
+  expect(input).toHaveFocus();
+  expect(input.selectionStart).toBe(0);
+  expect(input.selectionEnd).toBe("Sted".length);
+});
+
+test("lagrer med Enter og gir fokus tilbake til blyanten", async () => {
+  renderWithProviders();
+  await userEvent.click(editButton(category("Sted")));
+
+  await userEvent.keyboard("Film{Enter}");
+
+  expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
+  expect(editButton(category("Film"))).toHaveFocus();
+});
+
+test.each(["", "   "])(
+  "bruker standardnavnet når navnet lagres som «%s»",
+  async (typed) => {
+    const { unmount } = renderWithProviders();
+    await renameCategory("Sted", "Film");
+    await userEvent.click(editButton(category("Film")));
+    const input = screen.getByRole("textbox");
+    await userEvent.clear(input);
+    if (typed) {
+      await userEvent.type(input, typed);
+    }
+
+    await userEvent.keyboard("{Enter}");
+    unmount();
+    renderWithProviders();
+
+    expect(
+      screen.getByRole("heading", { name: "Sted", level: 2 })
+    ).toBeInTheDocument();
+  }
+);

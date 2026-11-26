@@ -8,6 +8,7 @@ import { EditTeamModal } from "../EditTeamModal/EditTeamModal";
 
 export function LeaderBoard() {
   const { teams } = useAllTeam();
+  const rankedTeams = [...teams].sort((a, b) => b.score - a.score);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [teamToEdit, setTeamToEdit] = useState<string | null>(null);
   return (
@@ -22,17 +23,19 @@ export function LeaderBoard() {
             </tr>
           </thead>
           <tbody>
-            {[...teams]
-              .sort((a, b) => b.score - a.score)
-              .map((team, index) => (
-                <LeaderBoardRow
-                  placement={index + 1}
-                  teamName={team.name}
-                  score={team.score}
-                  onEdit={() => setTeamToEdit(team.name)}
-                  key={index}
-                />
-              ))}
+            {rankedTeams.map((team, index) => (
+              <LeaderBoardRow
+                // Lag med like mange poeng deler den beste plassen.
+                placement={
+                  rankedTeams.findIndex((other) => other.score === team.score) +
+                  1
+                }
+                teamName={team.name}
+                score={team.score}
+                onEdit={() => setTeamToEdit(team.name)}
+                key={index}
+              />
+            ))}
           </tbody>
         </table>
       )}

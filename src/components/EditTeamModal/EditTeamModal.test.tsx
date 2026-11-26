@@ -124,7 +124,7 @@ test("angrer riktig lag etter navnebytte", async () => {
 
   expect(leaderBoard()).toEqual([
     ["1", "Vinnerne", "0"],
-    ["2", "Lag 2", "0"],
+    ["1", "Lag 2", "0"],
   ]);
 });
 
@@ -170,7 +170,7 @@ test("kan angre en runde fra et fjernet lag uten å gi andre minuspoeng", async 
 
   expect(leaderBoard()).toEqual([
     ["1", "Lag 2", "0"],
-    ["2", "Lag 1", "0"],
+    ["1", "Lag 1", "0"],
   ]);
   expect(tile("Sted", 300)).toBeEnabled();
 });

@@ -13,6 +13,10 @@ import {
 test("viser et brett med fire kategorier à fem ruter", () => {
   renderWithProviders();
 
+  expect(
+    screen.getByRole("heading", { level: 1, name: "Jeopardy" })
+  ).toBeInTheDocument();
+
   for (const name of ["Sted", "Tall", "Mat og drikke", "Tid"]) {
     for (const score of [100, 200, 300, 400, 500]) {
       expect(tile(name, score)).toBeEnabled();

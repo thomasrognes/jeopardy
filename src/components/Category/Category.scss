@@ -10,6 +10,10 @@
     justify-content: center;
   }
 
+  &__name-form {
+    min-width: 0;
+  }
+
   &__name-input {
     margin-top: 20px;
     margin-bottom: 12px;
@@ -42,6 +46,10 @@
         height: 0.6em;
         margin-top: 0;
       }
+    }
+
+    &__name-form {
+      flex: 1;
     }
 
     &__name-input {

@@ -95,7 +95,7 @@ test("fjerner feilmeldingen når navnet endres", async () => {
 
   expect(leaderBoard()).toEqual([
     ["1", "Lag 1", "0"],
-    ["2", "Lag 10", "0"],
+    ["1", "Lag 10", "0"],
   ]);
 });
 

@@ -12,7 +12,7 @@ export function UndoButton() {
   }
 
   const { categoryId, score, teamName } = lastRound;
-  const categoryName = categoryNames[categoryId] ?? categoryId;
+  const categoryName = categoryNames[categoryId]?.trim() || categoryId;
 
   return (
     <MenuButton

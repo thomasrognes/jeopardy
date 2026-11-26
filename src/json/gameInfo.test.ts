@@ -13,7 +13,6 @@ test("har unike id-er og navn", () => {
 test.each(gameInfo)("«$name» har gyldige felter", (game) => {
   expect(Number.isInteger(game.id)).toBe(true);
   expect(game.name.trim()).not.toBe("");
-  expect(game.author.trim()).not.toBe("");
   expect(game.googleDocLink).toMatch(
     /^https:\/\/docs\.google\.com\/spreadsheets\/d\/[\w-]+/
   );

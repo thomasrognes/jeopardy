@@ -22,8 +22,6 @@ test.each(gameInfo)("viser informasjon og lenker for «$name»", async (game) =>
 
   await userEvent.selectOptions(gameSelect(), game.name);
 
-  expect(screen.getByText(`Navn: ${game.name}`)).toBeInTheDocument();
-  expect(screen.getByText(`Creator: ${game.author}`)).toBeInTheDocument();
   expect(
     screen.getByText("NB! Kategoriene må endres manuelt.")
   ).toBeInTheDocument();
@@ -46,3 +44,39 @@ test("skjuler informasjonen når valget settes tilbake til tomt", async () => {
 
   expect(screen.queryByRole("link")).not.toBeInTheDocument();
 });
+
+test("husker valgt spill når det åpnes på nytt", async () => {
+  const { unmount } = render(<GameInfo />);
+  await userEvent.selectOptions(gameSelect(), gameInfo[1].name);
+
+  unmount();
+  render(<GameInfo />);
+
+  expect(gameSelect()).toHaveValue(String(gameInfo[1].id));
+  expect(
+    screen.getByRole("link", { name: "Fasit (Google docs)" })
+  ).toHaveAttribute("href", gameInfo[1].googleDocLink);
+});
+
+test("husker også at valget er fjernet", async () => {
+  const { unmount } = render(<GameInfo />);
+  await userEvent.selectOptions(gameSelect(), gameInfo[0].name);
+  await userEvent.selectOptions(gameSelect(), "");
+
+  unmount();
+  render(<GameInfo />);
+
+  expect(gameSelect()).toHaveValue("");
+});
+
+test.each(["ikke json", '"1"', "999"])(
+  "har ikke noe valg når lagret verdi er %s",
+  (stored) => {
+    window.localStorage.setItem("jeopardy.gameId", stored);
+
+    render(<GameInfo />);
+
+    expect(gameSelect()).toHaveValue("");
+    expect(screen.queryByRole("link")).not.toBeInTheDocument();
+  }
+);
