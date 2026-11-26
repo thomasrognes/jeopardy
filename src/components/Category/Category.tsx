@@ -18,13 +18,14 @@ export function Category(props: Props) {
   const categoryName = categoryNames[name] ?? name;
 
   return (
-    <div className="category">
+    <div className="category" role="group" aria-label={categoryName}>
       <div className="category__name">
         {editing ? (
           <input
             value={categoryName}
             onChange={(e) => setCategoryName(name, e.target.value)}
             className="category__name-input"
+            aria-label="Kategorinavn"
           />
         ) : (
           <h2>{categoryName}</h2>
@@ -32,6 +33,7 @@ export function Category(props: Props) {
         <button
           onClick={() => setEditing(!editing)}
           className="remove-button-style"
+          aria-label="Rediger kategorinavn"
         >
           <EditPen />
         </button>

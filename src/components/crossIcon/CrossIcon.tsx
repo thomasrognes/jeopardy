@@ -4,7 +4,7 @@ import "./CrossIcon.scss";
 
 export function CrossIcon() {
   return (
-    <svg viewBox="0 0 10 10" className="cross-icon">
+    <svg aria-hidden="true" viewBox="0 0 10 10" className="cross-icon">
       <line
         x1="0"
         y1="10"

@@ -46,6 +46,7 @@ export function Modal(props: Props) {
         <button
           onClick={onDialogToggle}
           className="modal__close-button remove-button-style"
+          aria-label="Lukk"
         >
           <CrossIcon />
         </button>
