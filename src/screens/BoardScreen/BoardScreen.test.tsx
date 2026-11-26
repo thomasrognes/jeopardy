@@ -7,6 +7,7 @@ import {
   awardNoPoints,
   awardPoints,
   category,
+  chooseFromMenu,
   click,
   dialogButton,
   renderScreen,
@@ -254,6 +255,17 @@ test("har lenker til fasit og spilleliste bare når et spill er valgt", async ()
     "href",
     gameInfo[0].spotifyLink
   );
+});
+
+test("viser spillereglene fra menyen", async () => {
+  renderScreen("board");
+
+  await chooseFromMenu("Slik spiller du");
+
+  const help = screen.getByRole("dialog", { name: "Slik spiller du" });
+  expect(menu()).not.toBeInTheDocument();
+  await click("Lukk");
+  expect(help).not.toBeInTheDocument();
 });
 
 // Alle rutene unntatt «Sted 100» er brukt.

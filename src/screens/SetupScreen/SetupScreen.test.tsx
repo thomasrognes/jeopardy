@@ -28,6 +28,25 @@ function gameButton(name: string) {
   return screen.getByRole("button", { name });
 }
 
+// --- Slik spiller du ---
+
+function howToPlay() {
+  return screen.queryByRole("dialog", { name: "Slik spiller du" });
+}
+
+test("viser spillereglene bare når man ber om dem", async () => {
+  renderScreen("setup");
+  expect(howToPlay()).not.toBeInTheDocument();
+
+  await click("Slik spiller du");
+
+  expect(within(howToPlay()!).getAllByRole("listitem").length).toBeGreaterThan(
+    0
+  );
+  await click("Lukk");
+  expect(howToPlay()).not.toBeInTheDocument();
+});
+
 // --- Lag ---
 
 test("legger til lag med Enter og med knappen", async () => {

@@ -1,0 +1,16 @@
+.how-to-play__steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0;
+  padding-left: 24px;
+  font-size: 18px;
+  line-height: 1.45;
+  // global.scss fjerner listenumrene.
+  list-style: decimal;
+
+  li::marker {
+    color: var(--color-gold);
+    font-weight: 700;
+  }
+}

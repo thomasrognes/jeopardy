@@ -3,6 +3,7 @@ import React, { useId, useState } from "react";
 import "./SetupScreen.scss";
 import type { Screen } from "../../App";
 import { ConfirmDialog } from "../../components/ConfirmDialog/ConfirmDialog";
+import { HowToPlay } from "../../components/HowToPlay/HowToPlay";
 import { useGame } from "../../hooks/gameHooks";
 import { useAllTeam } from "../../hooks/teamHooks";
 import { useSelectedGame } from "../../game/useSelectedGame";
@@ -20,6 +21,7 @@ export function SetupScreen(props: Props) {
   const { isInProgress, startNewGame } = useGame();
   const [selectedGame, selectGame] = useSelectedGame();
   const [isConfirmingNewGame, setIsConfirmingNewGame] = useState(false);
+  const [isShowingHelp, setIsShowingHelp] = useState(false);
 
   const summaryId = useId();
 
@@ -36,6 +38,13 @@ export function SetupScreen(props: Props) {
         <p className="muted">
           Gjør klart spillet, og start når alle er på plass.
         </p>
+        <button
+          type="button"
+          className="button button--quiet"
+          onClick={() => setIsShowingHelp(true)}
+        >
+          Slik spiller du
+        </button>
       </header>
 
       <main className="setup__columns">
@@ -76,6 +85,8 @@ export function SetupScreen(props: Props) {
           </button>
         )}
       </div>
+
+      {isShowingHelp && <HowToPlay onClose={() => setIsShowingHelp(false)} />}
 
       {isConfirmingNewGame && (
         <ConfirmDialog

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import type { Screen } from "../../App";
+import { HowToPlay } from "../../components/HowToPlay/HowToPlay";
 import gameInfo from "../../json/gameInfo.json";
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
 export function GameMenu(props: Props) {
   const { selectedGame, onNavigate } = props;
   const [isOpen, setIsOpen] = useState(false);
+  const [isShowingHelp, setIsShowingHelp] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -36,6 +38,14 @@ export function GameMenu(props: Props) {
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [isOpen]);
+
+  function showHelp() {
+    setIsOpen(false);
+    // Menyvalget forsvinner, så menyknappen får fokus. Dit går det tilbake
+    // når hjelpen lukkes.
+    buttonRef.current?.focus();
+    setIsShowingHelp(true);
+  }
 
   return (
     <div className="menu" ref={containerRef}>
@@ -85,6 +95,9 @@ export function GameMenu(props: Props) {
               </a>
             </>
           )}
+          <button type="button" className="menu__item" onClick={showHelp}>
+            Slik spiller du
+          </button>
           <button
             type="button"
             className="menu__item menu__item--separated"
@@ -94,6 +107,7 @@ export function GameMenu(props: Props) {
           </button>
         </nav>
       )}
+      {isShowingHelp && <HowToPlay onClose={() => setIsShowingHelp(false)} />}
     </div>
   );
 }
