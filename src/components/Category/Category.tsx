@@ -3,6 +3,7 @@ import { ScoreButton } from "../Scorebutton/ScoreButton";
 
 import "./Category.scss";
 import { EditPen } from "../EditPen/EditPen";
+import { useBoard } from "../../hooks/boardHooks";
 
 interface Props {
   name: string;
@@ -11,8 +12,10 @@ interface Props {
 export function Category(props: Props) {
   const { name } = props;
 
-  const [categoryName, setCategoryName] = useState(name);
   const [editing, setEditing] = useState(false);
+  const { categoryNames, setCategoryName } = useBoard();
+  // `name` er standardnavnet, og brukes også som fast id for kategorien.
+  const categoryName = categoryNames[name] ?? name;
 
   return (
     <div className="category">
@@ -20,7 +23,7 @@ export function Category(props: Props) {
         {editing ? (
           <input
             value={categoryName}
-            onChange={(e) => setCategoryName(e.target.value)}
+            onChange={(e) => setCategoryName(name, e.target.value)}
             className="category__name-input"
           />
         ) : (
@@ -33,11 +36,31 @@ export function Category(props: Props) {
           <EditPen />
         </button>
       </div>
-      <ScoreButton score={100} categoryName={categoryName} />
-      <ScoreButton score={200} categoryName={categoryName} />
-      <ScoreButton score={300} categoryName={categoryName} />
-      <ScoreButton score={400} categoryName={categoryName} />
-      <ScoreButton score={500} categoryName={categoryName} />
+      <ScoreButton
+        tileId={`${name}-100`}
+        score={100}
+        categoryName={categoryName}
+      />
+      <ScoreButton
+        tileId={`${name}-200`}
+        score={200}
+        categoryName={categoryName}
+      />
+      <ScoreButton
+        tileId={`${name}-300`}
+        score={300}
+        categoryName={categoryName}
+      />
+      <ScoreButton
+        tileId={`${name}-400`}
+        score={400}
+        categoryName={categoryName}
+      />
+      <ScoreButton
+        tileId={`${name}-500`}
+        score={500}
+        categoryName={categoryName}
+      />
     </div>
   );
 }

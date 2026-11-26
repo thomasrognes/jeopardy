@@ -1,4 +1,5 @@
-import React, { createContext, useState } from "react";
+import React, { createContext } from "react";
+import { usePersistedState } from "../hooks/usePersistedState";
 
 export interface TeamContextType {
   teams: Team[];
@@ -18,9 +19,23 @@ interface Props {
   children: React.ReactNode;
 }
 
+function isTeams(value: unknown): value is Team[] {
+  return (
+    Array.isArray(value) &&
+    value.every(
+      (team) =>
+        typeof team?.name === "string" && typeof team?.score === "number"
+    )
+  );
+}
+
 export function TeamsContextProvider(props: Props) {
   const { children } = props;
-  const [teams, setTeams] = useState<Team[]>([]);
+  const [teams, setTeams] = usePersistedState<Team[]>(
+    "jeopardy.teams",
+    [],
+    isTeams
+  );
 
   const context: TeamContextType = {
     teams,

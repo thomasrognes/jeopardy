@@ -4,21 +4,24 @@ import "./ScoreButton.scss";
 import { useAllTeam } from "../../hooks/teamHooks";
 import { Modal } from "../Modal/Modal";
 import classNames from "classnames";
+import { useBoard } from "../../hooks/boardHooks";
 
 interface Props {
+  tileId: string;
   score: number;
   categoryName: string;
 }
 
 export function ScoreButton(props: Props) {
   const [winnerTeam, setWinnerTeam] = useState<string>();
-  const [isDisabled, setIsDisabled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isOnlyWrongAnswers, setIsOnlyWrongAnswers] = useState(false);
-  const { score, categoryName } = props;
+  const { tileId, score, categoryName } = props;
 
   const { teams, setTeams } = useAllTeam();
+  const { usedTiles, markTileAsUsed } = useBoard();
+  const isDisabled = isModalOpen || usedTiles.includes(tileId);
 
   const classNamesForScoreButton = classNames({
     "score-button": true,
@@ -30,10 +33,7 @@ export function ScoreButton(props: Props) {
     <>
       <button
         className={classNamesForScoreButton}
-        onClick={() => {
-          setIsDisabled(true);
-          setIsModalOpen(true);
-        }}
+        onClick={openModal}
         disabled={isDisabled}
       >
         {score}
@@ -42,10 +42,8 @@ export function ScoreButton(props: Props) {
         <Modal
           title={`${categoryName} ${score} poeng`}
           hidden={false}
-          onDialogToggle={() => {
-            setIsModalOpen(!isModalOpen);
-            setIsDisabled(false); // Players can make a mistake and pick wrong category or score amount.
-          }}
+          // The tile is not marked as used, since players can pick the wrong one.
+          onDialogToggle={() => setIsModalOpen(false)}
         >
           <div className="select-component">
             <label htmlFor="teams">Velg laget som gjettet korrekt:</label>
@@ -72,7 +70,7 @@ export function ScoreButton(props: Props) {
                 type={"checkbox"}
                 id="noAnswers"
                 name="noAnswers"
-                // value={isOnlyWrongAnswers}
+                checked={isOnlyWrongAnswers}
                 onChange={() => setIsOnlyWrongAnswers(!isOnlyWrongAnswers)}
               />
               <label className={"checkbox-component-label"} htmlFor="noAnswers">
@@ -92,13 +90,26 @@ export function ScoreButton(props: Props) {
     </>
   );
 
+  function openModal() {
+    // Nothing from an earlier, cancelled attempt should carry over.
+    setWinnerTeam(undefined);
+    setErrorMessage("");
+    setIsOnlyWrongAnswers(false);
+    setIsModalOpen(true);
+  }
+
+  function completeRound() {
+    markTileAsUsed(tileId);
+    setIsModalOpen(false);
+  }
+
   function addScore() {
     if (isOnlyWrongAnswers) {
-      setIsModalOpen(false);
+      completeRound();
       return;
     }
 
-    if (winnerTeam === undefined) {
+    if (!winnerTeam) {
       setErrorMessage("Påkrevd felt.");
       return;
     }
@@ -120,6 +131,6 @@ export function ScoreButton(props: Props) {
     };
     setTeams(teamsArray);
 
-    setIsModalOpen(false);
+    completeRound();
   }
 }

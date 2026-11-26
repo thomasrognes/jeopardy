@@ -30,9 +30,11 @@ export function AddTeamModal(props: Props) {
           fullWidth
           required
           error={errorMessage !== ""}
+          helperText={errorMessage}
           slotProps={{
             htmlInput: { style: { fontSize: 20 } }, // font size of input text
             inputLabel: { style: { fontSize: 15 } }, // font size of input label
+            formHelperText: { style: { fontSize: 13 } },
           }}
           onChange={(e) => {
             setTeamName(e.target.value);
@@ -50,11 +52,21 @@ export function AddTeamModal(props: Props) {
   );
 
   function onCompleteClick() {
-    if (teamName === "") {
+    const name = teamName.trim();
+
+    if (name === "") {
       setErrorMessage("Lagnavn kan ikke være tomt.");
       return;
     }
-    setTeams([...teams, { name: teamName, score: 0 }]);
+    const isNameTaken = teams.some(
+      (team) => team.name.toLowerCase() === name.toLowerCase()
+    );
+    if (isNameTaken) {
+      setErrorMessage("Det finnes allerede et lag med det navnet.");
+      return;
+    }
+
+    setTeams([...teams, { name, score: 0 }]);
     setIsModalOpen(false);
   }
 }

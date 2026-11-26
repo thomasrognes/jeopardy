@@ -4,6 +4,28 @@
   color: $yellow;
 
   &__buttons {
+    display: flex;
+    gap: 2rem;
     margin: 0 1rem;
+  }
+}
+
+.reset-game {
+  padding: 2rem 0 0;
+  text-align: center;
+
+  &__confirm-button {
+    margin-top: 2rem;
+    font-size: 12pt;
+    padding: 1rem;
+    border: 2px solid $yellow;
+    border-radius: 100px;
+
+    &:hover {
+      color: $blue;
+      background-color: $yellow;
+      border: 2px solid $blue;
+      transition: 500ms;
+    }
   }
 }

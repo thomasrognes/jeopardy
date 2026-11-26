@@ -3,11 +3,14 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { TeamsContextProvider } from "./context/TeamContext";
+import { BoardContextProvider } from "./context/BoardContext";
 
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <TeamsContextProvider>
-      <App />
+      <BoardContextProvider>
+        <App />
+      </BoardContextProvider>
     </TeamsContextProvider>
   </React.StrictMode>
 );
