@@ -35,7 +35,7 @@ export function LeaderBoard() {
       )}
 
       <button
-        className="remove-button-style leader-board__button"
+        className="pill-button leader-board__button"
         onClick={() => setIsModalOpen(!isModalOpen)}
       >
         Legg til nytt lag

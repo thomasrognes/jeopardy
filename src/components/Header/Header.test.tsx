@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { screen } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import {
   addTeam,
@@ -53,6 +53,32 @@ test("sletter ingenting før nullstillingen er bekreftet", async () => {
   expect(category("Steder")).toBeInTheDocument();
   expect(leaderBoard()).toEqual([["1", "Lag 1", "200"]]);
   expect(tile("Tall", 200)).toBeDisabled();
+});
+
+test("avbryter nullstillingen uten å slette noe", async () => {
+  renderWithProviders();
+  await playOneRound();
+  await userEvent.click(
+    screen.getByRole("button", { name: "Nullstill spill" })
+  );
+
+  await userEvent.click(screen.getByRole("button", { name: "Avbryt" }));
+
+  expect(confirmButton()).not.toBeInTheDocument();
+  expect(leaderBoard()).toEqual([["1", "Lag 1", "200"]]);
+});
+
+// Nettleseren gir fokus til den første knappen i en dialog, så rekkefølgen
+// avgjør hva Enter gjør.
+test("har Avbryt som første knapp i nullstillingsdialogen", async () => {
+  renderWithProviders();
+
+  await userEvent.click(
+    screen.getByRole("button", { name: "Nullstill spill" })
+  );
+
+  const [first] = within(screen.getByRole("dialog")).getAllByRole("button");
+  expect(first).toHaveAccessibleName("Avbryt");
 });
 
 test("nullstiller lag, kategorinavn og ruter, også etter omlasting", async () => {

@@ -79,7 +79,7 @@ export function ScoreButton(props: Props) {
           </div>
           <button
             type="button"
-            className="add-points-button"
+            className="pill-button pill-button--primary add-points-button"
             onClick={addScore}
           >
             Legg til poeng

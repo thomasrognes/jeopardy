@@ -45,7 +45,7 @@ export function AddTeamModal(props: Props) {
         </div>
         <button
           type="submit"
-          className="remove-button-style add-team-modal__complete-button"
+          className="pill-button pill-button--primary add-team-modal__complete-button"
         >
           Fullfør
         </button>

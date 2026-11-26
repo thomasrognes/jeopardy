@@ -8,8 +8,11 @@
   font-weight: bold;
   border-radius: 2rem;
 
+  // Brukte ruter skal tre tilbake, så de ledige skiller seg ut.
   &__disabled {
-    color: darkgray;
+    border: 2px solid rgba(white, 0.08);
+    background: none;
+    color: rgba(white, 0.2);
   }
 
   &__not-disabled {
@@ -19,7 +22,7 @@
 
     &:hover {
       background-color: $yellow;
-      color: white;
+      color: $blue;
     }
   }
 }

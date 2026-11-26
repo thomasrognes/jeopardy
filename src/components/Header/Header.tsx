@@ -42,13 +42,23 @@ export function Header() {
         >
           <div className="reset-game">
             <p>Dette sletter alle lag, poeng, kategorinavn og brukte ruter.</p>
-            <button
-              type="button"
-              className="remove-button-style reset-game__confirm-button"
-              onClick={resetGame}
-            >
-              Ja, nullstill
-            </button>
+            <div className="reset-game__actions">
+              {/* Dialogen gir fokus til første knapp. Det skal være Avbryt. */}
+              <button
+                type="button"
+                className="pill-button pill-button--secondary"
+                onClick={() => setIsResetModalOpen(false)}
+              >
+                Avbryt
+              </button>
+              <button
+                type="button"
+                className="pill-button pill-button--danger"
+                onClick={resetGame}
+              >
+                Ja, nullstill
+              </button>
+            </div>
           </div>
         </Modal>
       )}

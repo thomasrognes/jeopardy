@@ -1,5 +1,6 @@
 import React from "react";
 import "./MenuButton.scss";
+import classNames from "classnames";
 
 interface Props {
   title: string;
@@ -11,7 +12,10 @@ export function MenuButton(props: Props) {
   const { title, onClick, className } = props;
 
   return (
-    <button className={`remove-button-style menu-button ${className}`} onClick={onClick}>
+    <button
+      className={classNames("pill-button menu-button", className)}
+      onClick={onClick}
+    >
       {title}
     </button>
   );
