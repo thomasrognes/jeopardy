@@ -1,18 +1,31 @@
 import React from "react";
-import "./App.scss";
-import "./utilities/utilities.scss";
-import { Board } from "./components/Board/Board";
-import { Header } from "./components/Header/Header";
-import { LeaderBoard } from "./components/LeaderBoard/LeaderBoard";
+import "./styles/global.scss";
+import "./styles/buttons.scss";
+import { usePersistedState } from "./hooks/usePersistedState";
+import { BoardScreen } from "./screens/BoardScreen/BoardScreen";
+import { ResultScreen } from "./screens/ResultScreen/ResultScreen";
+import { SetupScreen } from "./screens/SetupScreen/SetupScreen";
+
+export type Screen = "setup" | "board" | "result";
+
+function isScreen(value: unknown): value is Screen {
+  return value === "setup" || value === "board" || value === "result";
+}
 
 export function App() {
-  return (
-    <div className="App">
-      <Header />
-      <Board />
-      <LeaderBoard />
-    </div>
+  const [screen, setScreen] = usePersistedState<Screen>(
+    "jeopardy.screen",
+    "setup",
+    isScreen
   );
+
+  if (screen === "board") {
+    return <BoardScreen onNavigate={setScreen} />;
+  }
+  if (screen === "result") {
+    return <ResultScreen onNavigate={setScreen} />;
+  }
+  return <SetupScreen onNavigate={setScreen} />;
 }
 
 export default App;

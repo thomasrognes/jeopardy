@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import App from "./App";
+import App, { Screen } from "./App";
 import { BoardContextProvider } from "./context/BoardContext";
 import { TeamsContextProvider } from "./context/TeamContext";
 
@@ -13,32 +13,55 @@ export function renderWithProviders(ui: React.ReactElement = <App />) {
   );
 }
 
-export async function addTeam(name: string) {
-  await userEvent.click(screen.getByText("Legg til nytt lag"));
-  await userEvent.type(screen.getByLabelText(/Lagnavn/), name);
-  await userEvent.click(screen.getByText("Fullfør"));
+// Lagrer data slik appen selv gjør, før den rendres.
+export function store(key: string, value: unknown) {
+  window.localStorage.setItem(`jeopardy.${key}`, JSON.stringify(value));
 }
+
+export function renderScreen(screenName: Screen) {
+  store("screen", screenName);
+  return renderWithProviders();
+}
+
+export function click(name: string | RegExp) {
+  return userEvent.click(screen.getByRole("button", { name }));
+}
+
+// --- Oppsett ---
+
+export function newTeamField() {
+  return screen.getByRole("textbox", { name: "Navn på nytt lag" });
+}
+
+export async function addTeam(name: string) {
+  await userEvent.type(newTeamField(), `${name}{Enter}`);
+}
+
+export function teamNames() {
+  return screen
+    .queryAllByRole<HTMLInputElement>("textbox", { name: /^Navn på lag \d+$/ })
+    .map((input) => input.value);
+}
+
+// Rendrer oppsettet, legger til lagene og starter spillet.
+export async function startGame(...names: string[]) {
+  const view = renderWithProviders();
+  for (const name of names) {
+    await addTeam(name);
+  }
+  await click(/^(Start|Fortsett) spillet$/);
+  return view;
+}
+
+// --- Brettet ---
 
 export function category(name: string) {
   return screen.getByRole("group", { name });
 }
 
-export function editButton(column: HTMLElement) {
-  return within(column).getByRole("button", { name: "Rediger kategorinavn" });
-}
-
-export async function renameCategory(from: string, to: string) {
-  const column = category(from);
-  await userEvent.click(editButton(column));
-  const input = within(column).getByRole("textbox", { name: "Kategorinavn" });
-  await userEvent.clear(input);
-  await userEvent.type(input, to);
-  await userEvent.click(editButton(column));
-}
-
 export function tile(categoryName: string, score: number) {
   return within(category(categoryName)).getByRole("button", {
-    name: String(score),
+    name: new RegExp(`^${score}(, brukt)?$`),
   });
 }
 
@@ -58,21 +81,21 @@ export async function awardPoints(
 
 export async function awardNoPoints(categoryName: string, score: number) {
   await userEvent.click(tile(categoryName, score));
-  await userEvent.click(dialogButton("Ingen gjettet riktig"));
+  await userEvent.click(dialogButton("Ingen svarte riktig"));
 }
 
-export async function closeModal() {
-  await userEvent.click(screen.getByRole("button", { name: "Lukk" }));
+export async function chooseFromMenu(name: string) {
+  await click("Meny");
+  await click(name);
 }
 
-// Poengtavlen som [plassering, lagnavn, poeng] per rad.
-export function leaderBoard() {
-  return screen
-    .queryAllByRole("row")
-    .slice(1) // overskriftsraden
-    .map((row) =>
-      within(row)
-        .getAllByRole("cell")
-        .map((cell) => cell.textContent)
-    );
+// Teksten til hvert lag på poengtavlen: navn, status og poeng.
+export function scoreboard() {
+  const list = screen.queryByRole("list", { name: "Poeng" });
+  if (!list) {
+    return [];
+  }
+  return within(list)
+    .getAllByRole("listitem")
+    .map((item) => item.textContent);
 }

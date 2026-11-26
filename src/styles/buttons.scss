@@ -1,0 +1,49 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 24px;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  font-size: 16px;
+  font-weight: 600;
+
+  &:hover {
+    filter: brightness(1.12);
+  }
+
+  // Det viktigste valget på skjermen. Bare ett om gangen.
+  &--primary {
+    min-height: 64px;
+    padding: 0 48px;
+    background-color: var(--color-gold);
+    box-shadow: 0 6px 0 var(--color-gold-shadow);
+    color: var(--color-background);
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  &--secondary {
+    border-radius: 12px;
+    background-color: #2b3a9c;
+  }
+
+  &--outline {
+    border-color: var(--color-muted);
+  }
+
+  &--danger {
+    background-color: var(--color-danger);
+  }
+
+  &--quiet {
+    padding: 0 12px;
+    color: var(--color-muted);
+    text-decoration: underline;
+  }
+}

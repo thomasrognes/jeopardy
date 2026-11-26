@@ -1,4 +1,5 @@
 import React, { createContext } from "react";
+import { Team } from "../game/teams";
 import { usePersistedState } from "../hooks/usePersistedState";
 
 export interface TeamContextType {
@@ -10,11 +11,6 @@ export const TeamContext = createContext<TeamContextType>(
   undefined as unknown as TeamContextType
 );
 
-interface Team {
-  name: string;
-  score: number;
-}
-
 interface Props {
   children: React.ReactNode;
 }
@@ -24,7 +20,10 @@ function isTeams(value: unknown): value is Team[] {
     Array.isArray(value) &&
     value.every(
       (team) =>
-        typeof team?.name === "string" && typeof team?.score === "number"
+        typeof team?.name === "string" &&
+        typeof team?.score === "number" &&
+        (team.color === undefined ||
+          (Number.isInteger(team.color) && team.color >= 0))
     )
   );
 }

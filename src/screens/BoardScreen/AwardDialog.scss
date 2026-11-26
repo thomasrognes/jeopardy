@@ -1,0 +1,63 @@
+.award {
+  &__category {
+    display: block;
+    font-size: clamp(32px, 6vmin, 96px);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+
+  &__score {
+    display: block;
+    color: var(--color-gold);
+    font-size: clamp(96px, 26vmin, 400px);
+    font-weight: 800;
+    line-height: 0.95;
+    text-shadow: 0 0.04em 0 var(--color-background);
+  }
+
+  &__question {
+    font-size: clamp(18px, 2.6vmin, 40px);
+  }
+
+  &__teams {
+    display: grid;
+    flex-shrink: 0;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 26vmin), 1fr));
+    gap: 2vmin;
+    width: 100%;
+    max-width: 150vmin;
+  }
+
+  &__team {
+    min-height: clamp(72px, 13vmin, 200px);
+    padding: 12px 16px;
+    border: 0;
+    border-radius: 18px;
+    box-shadow: 0 6px 0 var(--color-background);
+    color: var(--color-background);
+    font-family: var(--font-display);
+    font-size: clamp(24px, 4.2vmin, 64px);
+    font-weight: 800;
+    line-height: 1.05;
+    overflow-wrap: break-word;
+
+    &:hover {
+      filter: brightness(1.1);
+    }
+  }
+}
+
+// På lave skjermer skal alle valgene få plass uten å rulle.
+@media (max-height: 700px) {
+  .award {
+    &__score {
+      font-size: 18vmin;
+    }
+
+    &__team {
+      min-height: 56px;
+      font-size: 22px;
+    }
+  }
+}

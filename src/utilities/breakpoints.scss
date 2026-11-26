@@ -1,7 +1,0 @@
-// Skjermen spillet vises på: bred og høy nok til at hele spillet får plass uten
-// å rulle.
-@mixin large-screen {
-  @media (min-width: 1024px) and (min-height: 600px) {
-    @content;
-  }
-}

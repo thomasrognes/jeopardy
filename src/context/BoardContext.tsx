@@ -18,7 +18,8 @@ export interface BoardContextType {
   addRound: (round: Round) => void;
   removeLastRound: () => void;
   replaceTeamInRounds: (from: string, to: string | null) => void;
-  resetBoard: () => void;
+  // Åpner alle rutene og sletter historikken. Kategorinavnene beholdes.
+  resetProgress: () => void;
 }
 
 export const BoardContext = createContext<BoardContextType>(
@@ -97,8 +98,7 @@ export function BoardContextProvider(props: Props) {
           round.teamName === from ? { ...round, teamName: to } : round
         )
       ),
-    resetBoard: () => {
-      setCategoryNames({});
+    resetProgress: () => {
       setUsedTiles([]);
       setRounds([]);
     },

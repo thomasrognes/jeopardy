@@ -12,5 +12,5 @@ test("starter appen i #root", async () => {
     await import("./index");
   });
 
-  expect(root).toContainElement(screen.getByText("Legg til nytt lag"));
+  expect(root).toContainElement(screen.getByText("Start spillet"));
 });

@@ -80,3 +80,21 @@ test("forblir åpen i Strict Mode", async () => {
   expect(screen.getByRole("dialog")).toHaveAttribute("open");
   expect(onClose).not.toHaveBeenCalled();
 });
+
+test("har tilbakeknapp i stedet for kryss når den fyller skjermen", async () => {
+  const onClose = vi.fn();
+  render(
+    <Modal title="Tittel" onClose={onClose} fullscreen>
+      <button type="button">Annet valg</button>
+    </Modal>
+  );
+
+  expect(
+    screen.queryByRole("button", { name: "Lukk" })
+  ).not.toBeInTheDocument();
+  const [first] = screen.getAllByRole("button");
+  expect(first).toHaveAccessibleName(/Tilbake til brettet/);
+  await userEvent.click(first);
+
+  expect(onClose).toHaveBeenCalledTimes(1);
+});

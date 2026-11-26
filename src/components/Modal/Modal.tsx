@@ -1,17 +1,20 @@
 import React, { useId, useLayoutEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import classNames from "classnames";
 
 import "./Modal.scss";
 import { CrossIcon } from "../crossIcon/CrossIcon";
 
 interface Props {
-  title: string;
+  title: React.ReactNode;
   onClose: () => void;
   children: React.ReactNode;
+  // Fyller hele skjermen og har en tilbakeknapp i stedet for kryss.
+  fullscreen?: boolean;
 }
 
 export function Modal(props: Props) {
-  const { title, onClose, children } = props;
+  const { title, onClose, children, fullscreen = false } = props;
   const dialogRef = useRef<HTMLDialogElement>(null);
   const titleId = useId();
 
@@ -26,7 +29,9 @@ export function Modal(props: Props) {
   return createPortal(
     <dialog
       ref={dialogRef}
-      className="app-modal"
+      className={classNames("app-modal", {
+        "app-modal--fullscreen": fullscreen,
+      })}
       aria-labelledby={titleId}
       onClose={() => {
         // close-hendelsen kommer asynkront. Strict Mode lukker og åpner
@@ -36,18 +41,30 @@ export function Modal(props: Props) {
         }
       }}
     >
-      <h3 id={titleId} className="app-modal__title">
+      {/* Står først, så den får fokus: et ekstra Enter-trykk går tilbake. */}
+      {fullscreen && (
+        <button
+          type="button"
+          onClick={onClose}
+          className="button app-modal__back-button"
+        >
+          <span aria-hidden="true">←&nbsp;</span>Tilbake til brettet
+        </button>
+      )}
+      <h2 id={titleId} className="app-modal__title">
         {title}
-      </h3>
+      </h2>
       {children}
-      <button
-        type="button"
-        onClick={onClose}
-        className="app-modal__close-button remove-button-style"
-        aria-label="Lukk"
-      >
-        <CrossIcon />
-      </button>
+      {!fullscreen && (
+        <button
+          type="button"
+          onClick={onClose}
+          className="app-modal__close-button"
+          aria-label="Lukk"
+        >
+          <CrossIcon />
+        </button>
+      )}
     </dialog>,
     document.body
   );
