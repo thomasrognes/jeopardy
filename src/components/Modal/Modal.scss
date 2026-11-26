@@ -1,22 +1,17 @@
-.modal {
-  align-items: center;
-  display: grid;
-  grid-template: 1fr/55rem;
-  height: 100%;
-  justify-content: center;
-  left: 0;
-  overflow-y: auto;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1;
-  background-color: rgba(0, 0, 0, 0.4);
+// Ikke bruk klassen .modal: Bootstrap skjuler alle elementer med det navnet.
+.app-modal {
+  // index.css nullstiller marger, så sentreringen må settes igjen.
+  margin: auto;
+  width: 55rem;
+  max-width: calc(100% - 2rem);
+  padding: 1rem;
+  border: none;
+  background-color: white;
+  color: #333;
+  box-shadow: 0 8px 10px 0 rgba(0, 0, 0, 0.3);
 
-  &__content {
-    position: relative;
-    background-color: white;
-    box-shadow: 0 8px 10px 0 rgba(0, 0, 0, 0.3);
-    padding: 1rem;
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.4);
   }
 
   &__close-button {

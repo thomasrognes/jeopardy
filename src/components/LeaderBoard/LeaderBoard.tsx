@@ -42,11 +42,8 @@ export function LeaderBoard() {
       </button>
 
       {isModalOpen && (
-        <AddTeamModal
-          setIsModalOpen={setIsModalOpen}
-          isModalOpen={isModalOpen}
-        />
-      ) }
+        <AddTeamModal setIsModalOpen={setIsModalOpen} />
+      )}
     </div>
   );
 }

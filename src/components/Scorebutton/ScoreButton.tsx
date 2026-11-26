@@ -21,7 +21,7 @@ export function ScoreButton(props: Props) {
 
   const { teams, setTeams } = useAllTeam();
   const { usedTiles, markTileAsUsed } = useBoard();
-  const isDisabled = isModalOpen || usedTiles.includes(tileId);
+  const isDisabled = usedTiles.includes(tileId);
 
   const classNamesForScoreButton = classNames({
     "score-button": true,
@@ -41,9 +41,8 @@ export function ScoreButton(props: Props) {
       {isModalOpen && (
         <Modal
           title={`${categoryName} ${score} poeng`}
-          hidden={false}
           // The tile is not marked as used, since players can pick the wrong one.
-          onDialogToggle={() => setIsModalOpen(false)}
+          onClose={() => setIsModalOpen(false)}
         >
           <div className="select-component">
             <label htmlFor="teams">Velg laget som gjettet korrekt:</label>

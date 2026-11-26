@@ -24,6 +24,27 @@ test("legger til et lag med 0 poeng og lukker dialogen", async () => {
   expect(dialogTitle()).not.toBeInTheDocument();
 });
 
+test("legger til laget når man trykker Enter", async () => {
+  renderWithProviders();
+  await userEvent.click(screen.getByText("Legg til nytt lag"));
+
+  await userEvent.type(screen.getByLabelText(/Lagnavn/), "Lag 1{Enter}");
+
+  expect(leaderBoard()).toEqual([["1", "Lag 1", "0"]]);
+  expect(dialogTitle()).not.toBeInTheDocument();
+});
+
+test("knytter feilmeldingen til tekstfeltet", async () => {
+  renderWithProviders();
+  await userEvent.click(screen.getByText("Legg til nytt lag"));
+
+  await userEvent.click(screen.getByText("Fullfør"));
+
+  expect(screen.getByLabelText(/Lagnavn/)).toHaveAccessibleDescription(
+    emptyNameError
+  );
+});
+
 test("fjerner mellomrom foran og bak lagnavnet", async () => {
   renderWithProviders();
 

@@ -4,9 +4,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@mui/material": "^9.6.0",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/jest-dom": "^8.0.0",
     "@testing-library/react": "^16.3.3",
@@ -43,7 +40,6 @@
     ]
   },
   "devDependencies": {
-    "@nrk/core-dialog": "^4.0.4",
     "@types/node": "^24.19.4",
     "@types/react": "^19.3.3",
     "@types/react-dom": "^19.3.0",

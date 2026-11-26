@@ -41,7 +41,6 @@ test("åpner en dialog med kategori, poengsum og alle lag", async () => {
   expect(
     screen.getAllByRole("option").map((option) => option.textContent)
   ).toEqual(["", "Lag 1", "Lag 2"]);
-  expect(tile("Tall", 400)).toBeDisabled();
 });
 
 test("gir poengene til valgt lag og bruker opp ruten", async () => {

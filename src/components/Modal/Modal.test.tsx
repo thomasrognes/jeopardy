@@ -1,66 +1,82 @@
-import { beforeEach, expect, test, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { expect, test, vi } from "vitest";
+import { StrictMode } from "react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Modal } from "./Modal";
 
-// Elementet testen selv lager, slik at portalen kan sjekkes direkte.
-let modalRoot: HTMLElement;
-
-beforeEach(() => {
-  modalRoot = document.createElement("div");
-  modalRoot.id = "modal-root";
-  document.body.replaceChildren(modalRoot);
-});
-
 function renderModal() {
-  const onDialogToggle = vi.fn();
+  const onClose = vi.fn();
   const view = render(
-    <Modal title="Tittel" hidden={false} onDialogToggle={onDialogToggle}>
+    <Modal title="Tittel" onClose={onClose}>
       <p>Innhold</p>
     </Modal>
   );
-  return { ...view, onDialogToggle };
+  return { ...view, onClose };
 }
 
-test("rendrer tittel og innhold i #modal-root", () => {
-  const { container } = renderModal();
+// Lar eventuelle ventende close-hendelser bli levert.
+function nextTask() {
+  return new Promise((resolve) => setTimeout(resolve));
+}
 
-  expect(modalRoot).toContainElement(screen.getByRole("dialog"));
-  expect(modalRoot).toContainElement(
-    screen.getByRole("heading", { name: "Tittel" })
+test("åpnes som modal dialog med tittelen som navn", () => {
+  const showModal = vi.spyOn(HTMLDialogElement.prototype, "showModal");
+
+  renderModal();
+
+  expect(screen.getByRole("dialog", { name: "Tittel" })).toHaveAttribute(
+    "open"
   );
-  expect(modalRoot).toContainElement(screen.getByText("Innhold"));
-  expect(container).toBeEmptyDOMElement();
+  expect(screen.getByText("Innhold")).toBeInTheDocument();
+  expect(showModal).toHaveBeenCalledTimes(1);
 });
 
-test("fjerner innholdet når den avmonteres", () => {
+test("rendres utenfor komponenten som bruker den", () => {
+  const { container } = renderModal();
+
+  expect(container).toBeEmptyDOMElement();
+  expect(screen.getByRole("dialog")).toBeInTheDocument();
+});
+
+test("lukker dialogen før den fjernes", () => {
+  const close = vi.spyOn(HTMLDialogElement.prototype, "close");
   const { unmount } = renderModal();
 
   unmount();
 
-  expect(modalRoot).toBeEmptyDOMElement();
+  expect(close).toHaveBeenCalledTimes(1);
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
 });
 
 test("ber om å lukkes når krysset trykkes", async () => {
-  const { onDialogToggle } = renderModal();
+  const { onClose } = renderModal();
 
   await userEvent.click(screen.getByRole("button", { name: "Lukk" }));
 
-  expect(onDialogToggle).toHaveBeenCalledTimes(1);
+  expect(onClose).toHaveBeenCalledTimes(1);
 });
 
-test("ber om å lukkes med Escape", async () => {
-  const { onDialogToggle } = renderModal();
+// Slik lukker nettleseren dialogen når man trykker Escape.
+test("gir beskjed når nettleseren lukker dialogen", async () => {
+  const { onClose } = renderModal();
 
-  await userEvent.keyboard("{Escape}");
+  screen.getByRole<HTMLDialogElement>("dialog").close();
 
-  expect(onDialogToggle).toHaveBeenCalledTimes(1);
+  await waitFor(() => expect(onClose).toHaveBeenCalledTimes(1));
 });
 
-test("kaster en feil hvis #modal-root mangler", () => {
-  modalRoot.remove();
-  // React logger feilen i tillegg til å kaste den.
-  vi.spyOn(console, "error").mockImplementation(() => {});
+test("forblir åpen i Strict Mode", async () => {
+  const onClose = vi.fn();
 
-  expect(() => renderModal()).toThrow("DOM element to render modal in");
+  render(
+    <StrictMode>
+      <Modal title="Tittel" onClose={onClose}>
+        <p>Innhold</p>
+      </Modal>
+    </StrictMode>
+  );
+  await nextTask();
+
+  expect(screen.getByRole("dialog")).toHaveAttribute("open");
+  expect(onClose).not.toHaveBeenCalled();
 });

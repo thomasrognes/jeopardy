@@ -1,7 +1,44 @@
 @import "src/utilities/colors.scss";
 
 .add-team-modal {
-  padding: 2rem 0;
+  padding-top: 2rem;
+
+  &__field {
+    padding-bottom: 2rem;
+  }
+
+  &__label {
+    display: block;
+    margin: 0;
+    font-size: 12px;
+    font-weight: normal;
+    color: #666;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 0.4rem 0;
+    border: none;
+    border-bottom: 1px solid #949494;
+    border-radius: 0;
+    font-size: 20px;
+
+    &:focus {
+      outline: none;
+      border-bottom: 2px solid $blue;
+    }
+
+    &[aria-invalid="true"] {
+      border-bottom-color: #d32f2f;
+    }
+  }
+
+  &__error {
+    display: block;
+    margin-top: 0.4rem;
+    font-size: 13px;
+    color: #d32f2f;
+  }
 
   &__complete-button {
     display: block;

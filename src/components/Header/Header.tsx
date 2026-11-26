@@ -29,10 +29,7 @@ export function Header() {
       {isChangeGameModalOpen && (
         <Modal
           title={"Endre spill"}
-          hidden={false}
-          onDialogToggle={() =>
-            setIsChangeGameModalOpen(!isChangeGameModalOpen)
-          }
+          onClose={() => setIsChangeGameModalOpen(false)}
         >
           <GameInfo />
         </Modal>
@@ -41,13 +38,10 @@ export function Header() {
       {isResetModalOpen && (
         <Modal
           title={"Nullstill spill"}
-          hidden={false}
-          onDialogToggle={() => setIsResetModalOpen(false)}
+          onClose={() => setIsResetModalOpen(false)}
         >
           <div className="reset-game">
-            <p>
-              Dette sletter alle lag, poeng, kategorinavn og brukte ruter.
-            </p>
+            <p>Dette sletter alle lag, poeng, kategorinavn og brukte ruter.</p>
             <button
               type="button"
               className="remove-button-style reset-game__confirm-button"
